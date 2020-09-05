@@ -12,8 +12,8 @@ class Configuration {
     // User-Agent definitions
     // userfixr : used for low-frequency actions - authentication, user info fetching, etc
     // resolver :  used for high-frequency actions - primarily resolving projects
-    public static $agent_userfixr = "com.bitwolfy.tagme/userfixr/0.1";
-    public static $agent_resolver = "com.bitwolfy.tagme/resolver/0.1";
+    public static $agent_userfixr = "dev.tagme/userfixr/0.1";
+    public static $agent_resolver = "dev.tagme/resolver/0.1";
 
     // Google ReCaptcha configuration
     public static $recaptcha_key = "";

@@ -7,7 +7,7 @@ import { ProjectEdit } from "./modules/ProjectEdit";
 import { User } from "./modules/User";
 
 window["tagme"] = {
-    "useragent": "com.bitwolfy.tagme/resolver/0.1",
+    "useragent": "dev.tagme/resolver/0.1",
 };
 
 Background.init();
