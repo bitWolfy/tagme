@@ -123,7 +123,7 @@ export class Project {
 
                 console.log(await beetlejuice.text());
 
-                // location.href = `/projects/${projectID}/resolve/`;
+                location.href = `/projects/${projectID}/resolve/`;
                 working = false;
                 submitbutton.removeAttr("loading");
                 return false;
@@ -131,13 +131,12 @@ export class Project {
 
             // If no changes have been made, simply skip to the next post
             if (oldTags == newTags) {
-                // location.href = `/projects/${projectID}/resolve/`;
+                location.href = `/projects/${projectID}/resolve/`;
                 working = false;
                 submitbutton.removeAttr("loading");
                 return false;
             }
 
-            /*
             // Submit changes to e621
             const response = await fetch(`/projects/${projectID}/resolve/${post.id}.json`, {
                 method: "POST",
@@ -153,7 +152,6 @@ export class Project {
 
             if (data["success"]) location.href = `/projects/${projectID}/resolve/`;
             else $("#resolve-error").removeClass("display-none");
-            */
 
             submitbutton.removeAttr("loading");
             working = false;
