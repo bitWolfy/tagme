@@ -114,6 +114,7 @@ function getUserList($query = []) {
         $response["data"] = [];
         foreach($lookup as $entry) {
             $entry["rank_string"] = UserRank :: to_string($entry["rank"]);
+            if(is_null($entry["changes"])) $entry["changes"] = 0;
             $idList[] = $entry["user_id"];
             $response["data"][] = $entry;
         }
