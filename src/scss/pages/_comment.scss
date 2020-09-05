@@ -1,0 +1,45 @@
+section#comment-list {
+    padding: 0.5rem 0;
+    section-header { padding: 0 0.5rem; }
+}
+
+comment {
+    display: flex;
+    flex-flow: column;
+    padding: 0.5rem;
+
+    comment-actions {
+        display: none;
+        float: right;
+        a { margin-left: 0.5rem; }
+        a, a:visited { color: #999; }
+        a:hover, a:active { color: #ffd22f; }
+    }
+
+    &:hover {
+        background: #ffffff05;
+        comment-actions { display: block; }
+    }
+
+    &[data-hidden=true] { background: #ff000010; }
+}
+
+form#comment-new-form,
+form.comment-edit-form {
+    display: flex;
+    flex-flow: wrap;
+
+    textarea {
+        min-height: 5rem;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        outline: 0 !important;
+        resize: vertical;
+    }
+    button[type=submit] {
+        width: 5rem;
+    }
+    span {
+        margin-left: auto;
+    }
+}

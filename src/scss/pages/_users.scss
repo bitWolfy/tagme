@@ -1,0 +1,10 @@
+section.user-list table {
+    width: 100%;
+
+    tr th:first-child { text-align: left; }
+
+    tr td {
+        text-align: center;
+        &:first-child { text-align: left; }
+    }
+}

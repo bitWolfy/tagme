@@ -1,0 +1,18 @@
+// Import Variables
+@import "utilities/functions";
+@import "components/colors";
+
+@import "pages/common";
+
+/* Separate Page Styles */
+@import "components/header";
+@import "components/login";
+@import "components/search";
+
+@import "pages/home";
+@import "pages/project.resolve";
+@import "pages/project.new";
+@import "pages/project.info";
+@import "pages/project.list";
+@import "pages/users";
+@import "pages/comment";

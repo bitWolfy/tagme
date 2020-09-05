@@ -1,0 +1,24 @@
+div.page-actions {
+    a.action-resolve {
+        background: #ffd22f !important;
+        color: #081119;
+        font-weight: 700;
+    }
+}
+
+section#project-info-actions {
+    table {
+        width: 100%;
+        font-family: monospace;
+    }
+    th {
+        width: 33%;
+        text-align: left;
+    }
+}
+
+section#project-info-tags {
+    font-family: monospace;
+    padding: 0 0.5rem;
+    background: #ffffff10;
+}

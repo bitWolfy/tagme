@@ -1,0 +1,116 @@
+h1#project-new-header {
+    margin: 1rem 1rem 0;
+}
+
+form#project-new {
+    display: flex;
+    flex-flow: column;
+    padding: 1rem;
+
+    input, textarea {
+        outline: 0 !important;
+        font: 400 0.8rem Verdana;
+        border: 1px solid transparent;
+        border-left: 3px solid transparent;
+        padding-left: 1px;
+        resize: vertical;
+
+        &.invalid {
+            border-left-color: orangered;
+            box-shadow: none;
+        }
+    }
+
+    textarea[name=text] { height: 120px; }
+
+    input-group {
+        display: grid;
+        grid-template-columns: 10rem auto;
+        margin: 0 0 0.5rem;
+
+        &.input-descr {
+            display: block;
+            padding-left: 10rem;
+            font-family: monospace;
+            margin-top: -0.25rem;
+            margin-bottom: 0.75rem;
+        }
+    }
+
+    // Meta
+    input-label#input-meta-label {
+        position: relative;
+
+        span#input-meta-invalid {
+            display: block;
+            position: absolute;
+            font-family: monospace;
+            color: coral;
+        }
+    }
+
+    // Options
+    div.option {
+        display: grid;
+        grid-template-columns: 1fr 1fr 4rem;
+        grid-column-gap: 0.5rem;
+        grid-row-gap: 0.5rem;
+        margin-bottom: 1.5rem;
+
+        div.option-name {
+            grid-column: 1/3;
+            display: flex;
+
+            input {
+                flex: 1;
+                margin-left: 1rem;
+            }
+        }
+
+        div.option-controls {
+            grid-column: 3/4;
+            grid-row: 1/3;
+
+            button {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        div.option-addtags,
+        div.option-remtags {
+            label { display: block; }
+            textarea { width: 100%; }
+        }
+    }
+
+    div#options-add {
+        grid-column: 2;
+        display: grid;
+        grid-template-columns: 6rem auto;
+        grid-column-gap: 0.5rem;
+
+        button {
+            height: 2rem;
+        }
+
+        div#options-add-descr {
+            font-family: monospace;
+        }
+
+    }
+
+    div.submit-group {
+        display: grid;
+        grid-template-columns: 10rem auto 4rem;
+
+        div#submit-response {
+            display: flex;
+            align-items: center;
+            color: coral;
+        }
+
+        button { height: 2rem; }
+    }
+}
+

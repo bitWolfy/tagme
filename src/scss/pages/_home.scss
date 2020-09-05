@@ -1,0 +1,19 @@
+section.home-display {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 1rem;
+
+    section.home-projects {
+        display: grid;
+        grid-template-columns: max-content auto;
+        grid-column-gap: 1rem;
+        padding: 0;
+    }
+
+    section.home-contributions {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        grid-column-gap: 1rem;
+        padding: 0;
+    }
+}

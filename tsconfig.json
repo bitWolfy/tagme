@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "target": "ES2019",
+        "outDir": "./build/",
+        "rootDir": "./src/js/",
+        "removeComments": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "node_modules/@shopify"
+        ]
+    }
+}
