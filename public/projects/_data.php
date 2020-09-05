@@ -75,7 +75,6 @@ function getProjectList($query = []) {
 
     
     // Proceed with the search
-    $idList = [];
     $db = Database :: connect();
     try {
         $response["count"] = $db -> count(
@@ -106,7 +105,7 @@ function getProjectList($query = []) {
         if($lookup == false) $lookup = [];
         $response["data"] = [];
         foreach($lookup as $entry) {
-            $idList[] = $entry["project_id"];
+            if(is_null($entry["changes"])) $entry["changes"] = 0;
             $response["data"][] = $entry;
         }
     } catch (Error $e) {
