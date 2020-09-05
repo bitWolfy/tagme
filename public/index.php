@@ -43,8 +43,7 @@ ob_start();
 <head>
     <title><!-- %PAGETITLE% --></title>
 
-    <link rel="icon" type="image/png" href="/static/images/favicon.ico"/>
-
+    <!-- Libraries -->
 <?php foreach ( $libraries ["css"] as $cssLibrary ) { ?>
     <link rel="stylesheet" href="<?php echo SITE . '/static/libraries/' . $cssLibrary; ?>" />
 <?php } ?>
@@ -57,9 +56,12 @@ ob_start();
 <?php } ?>
 
 <?php if(User :: isLoggedIn()) { ?>
+    <!-- User Metadata -->
     <meta name="current-user-name" content="<?php echo User :: getUsername(); ?>">
     <meta name="current-user-id" content="<?php echo User :: getUserID(); ?>">
 <?php } ?>
+
+    <!-- Site Metadata -->
     <meta name="og:site_name" content="TagMe!">
     <meta name="og:title" content="<!-- %PAGETITLE% -->">
     <meta name="og:description" content="<!-- %PAGEDESCR% -->">
@@ -67,11 +69,21 @@ ob_start();
 
     <meta name="recaptcha" content="<?php echo Configuration :: $recaptcha_key; ?>">
 
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico"/>
     <link rel="icon" type="image/png" href="/static/images/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/static/images/favicon-16x16.png" sizes="16x16">
 
     <style type="text/css" id="background-style"></style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177332605-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-177332605-1');
+    </script>
 
 </head>
 
