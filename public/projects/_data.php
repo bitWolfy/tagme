@@ -42,7 +42,8 @@ function getProjectList($query = []) {
     
     $pageParams = [
         "LIMIT" => [($pageNum - 1) * Configuration :: $page_length, Configuration :: $page_length],
-        "ORDER" => [ $order["by"] => $order["how"] ]
+        "ORDER" => [ $order["by"] => $order["how"] ],
+        "GROUP" => "project_id",
     ];
     
     
@@ -53,7 +54,7 @@ function getProjectList($query = []) {
     if(isset($query["search"])) {
         $searchVal = preg_replace("/[^\p{L}\p{N}\s]/u", "", $query["search"]);
         if(!Util :: validate_search_param($searchVal)) {
-            $response["error"] = "input.search";
+            $response["error"] = "input.lookup";
             return $response;
         }
 
@@ -84,6 +85,9 @@ function getProjectList($query = []) {
         $lookup = $db -> select(
             "project",
             [
+                "[>]project_changes" => "project_id",
+            ],
+            [
                 "project_id[Int]",
                 "name",
                 "meta",
@@ -94,6 +98,7 @@ function getProjectList($query = []) {
                 "optmode[Int]",
                 "options[JSON]",
                 "is_deleted[Bool]",
+                "changes[Int]" => Medoo\Medoo::raw("SUM(<project_changes.changes>)"),
             ],
             array_merge($searchParams, $pageParams)
         );
@@ -107,11 +112,6 @@ function getProjectList($query = []) {
     } catch (Error $e) {
         $response["error"] = "response.db";
         return $response;
-    }
-
-    $changes = getProjectChangesCount($idList);
-    foreach($response["data"] as $key => $entry) {
-        $response["data"][$key]["changes"] = $changes["data"][$entry["project_id"]];
     }
     
     if(!$response["count"]) $response["count"] = 0;
@@ -143,6 +143,18 @@ function getUserProjectCount($id_list) {
 
     $response["success"] = true;
     return $response;
+}
+
+function deleteProject($project_id, $restore = false) {
+    
+    $db = Database :: connect();
+    $db -> update(
+        "project",
+        [ "is_deleted" => $restore ? 0 : 1, ],
+        [ "meta" => $project_id, ]
+    );
+
+    return $restore;
 }
 
 ?>

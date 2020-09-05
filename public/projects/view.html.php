@@ -34,7 +34,18 @@ $Parsedown = new Parsedown();
 $Parsedown -> setSafeMode(true);
 ?>
 
-<section class="page-title">
+<section
+    class="page-title"
+    data-id="<?php outprint($project["project_id"]); ?>"
+    data-name="<?php outprint($project["name"]); ?>"
+    data-meta="<?php outprint($project["meta"]); ?>"
+    data-user="<?php outprint($project["user"]); ?>"
+    data-desc="<?php outprint($project["desc"]); ?>"
+    data-tags="<?php outprint(implode(" ", $project["tags"])); ?>"
+    data-optmode="<?php outprint($project["optmode"]); ?>"
+    data-deleted="<?php echo $project["is_deleted"] ? "true" : "false" ?>"
+    data-changes="<?php outprint($project["changes"]); ?>"
+>
     <section-header><?php outprint($project["name"]); ?></section-header>
     <div class="page-actions">
         <?php if(User :: rankMatches(UserRank :: MEMBER)) { ?>
@@ -46,7 +57,7 @@ $Parsedown -> setSafeMode(true);
         <?php } ?>
 
         <?php if(User :: rankMatches(UserRank :: JANITOR)) { ?>
-            <a href="/projects/<?php outprint($projectID); ?>/delete" class="action-delete">Delete</a>
+            <a href="/projects/<?php outprint($projectID); ?>/delete<?php echo $project["is_deleted"] ? "?restore=true" : ""; ?>" class="action-delete"><?php echo $project["is_deleted"] ? "Restore" : "Delete"; ?></a>
         <?php } ?>
     </div>
 </section>

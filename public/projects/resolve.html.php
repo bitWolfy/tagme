@@ -14,7 +14,7 @@ $postID = PageRouter :: getVars("post_id");
 $projectData = getProjectByID($projectID);
 
 // ABORT - Invalid Project
-if($projectData["count"] == 0) {
+if($projectData["count"] == 0 || $projectData["data"]["is_deleted"]) {
 ?>
 
 <section class="project-error">
@@ -24,21 +24,14 @@ if($projectData["count"] == 0) {
 </section>
     
 <?php
-    return [
-        "title" => "Invalid Project - TagMe!",
-    ];
+    return [ "title" => "Invalid Project - TagMe!", ];
 }
 
-    $project = $projectData["data"];
-    if(is_null($postID)) $query = implode("+", $project["tags"]) . "+order:random+-type:swf+-type:webm";
-    else $query = "id:" . $postID . "+-type:swf+-type:webm";
+$project = $projectData["data"];
+if(is_null($postID)) $query = implode("+", $project["tags"]) . "+order:random+-type:swf+-type:webm";
+else $query = "id:" . $postID . "+-type:swf+-type:webm";
 
-    /*
-    echo "<pre>";
-    var_dump($project);
-    echo "</pre>";
-    */
-    
+
 $client = new Client([
     "base_uri" => "https://e621.net/",
     "timeout"  => 2.0,

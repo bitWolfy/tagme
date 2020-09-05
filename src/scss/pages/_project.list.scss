@@ -1,1 +1,14 @@
 
+section.project-list {
+    
+    table { width: 100%; }
+    thead th:first-child { text-align: left }
+    tbody {
+        td {
+            text-align: center;
+            &:first-child { text-align: left; }
+        }
+        tr[data-deleted=true] { background: #ff000030; }
+    }
+
+}

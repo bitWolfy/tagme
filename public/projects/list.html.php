@@ -6,9 +6,9 @@ use TagMe\Configuration;
 use TagMe\Auth\User;
 use TagMe\Auth\UserRank;
 
-$lookup = getProjectList($_GET);
+if(!isset($_GET["is_deleted"])) $_GET["is_deleted"] = "false";
 
-// TODO Make sure the lookup is valid and has results
+$lookup = getProjectList($_GET);
 
 $count = $lookup["count"];
 $result = $lookup["data"];
@@ -26,19 +26,24 @@ $maxPage = ceil($count / Configuration :: $page_length);
 <section class="project-list">
 <?php if(count($result) == 0) { ?>
     <span class="no-results">No Results Found</span>
-<?php } ?>
-<?php foreach($result as $entry) { ?>
-
-    <div><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
-    <div><?php echo $entry["desc"]; ?></div>
-    <div>
-        <?php if(User :: rankMatches(UserRank :: PRIVILEGED)) { ?>
-        <a href="/projects/<?php echo $entry["meta"]; ?>/resolve">Resolve</a>
+<?php } else { ?>
+    <table>
+        <thead><tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Changes</th>
+        </tr></thead>
+        <tbody>
+        <?php foreach($result as $entry) { ?>
+            <tr class="project-row" data-deleted="<?php echo $entry["is_deleted"] ? "true" : "false"; ?>">
+                <td><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></td>
+                <td><?php echo $entry["desc"]; ?></td>
+                <td><?php echo $entry["changes"]; ?></td>
+            </tr>
         <?php } ?>
-    </div>
-
+        </tbody>
+    </table>
 <?php } ?>
-
 </section>
 <section class="pagination">
 <?php

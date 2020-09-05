@@ -1,3 +1,8 @@
+section.page-title {
+    
+    &[data-deleted=true] { background: #ff000030; }
+}
+
 div.page-actions {
     a.action-resolve {
         background: #ffd22f !important;

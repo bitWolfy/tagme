@@ -28,6 +28,8 @@ class Util {
         foreach($query as $key => $value) {
             if(!in_array($key, $validKeys) || !self :: validate_query_param($value)) return null;
 
+            if($value == "any") continue;
+
             // Account for a potential comma-separated list instead of a single value
             $index = 0;
             $result = [];
