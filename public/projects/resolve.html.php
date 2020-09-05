@@ -42,8 +42,8 @@ $Parsedown = new Parsedown();
 ?>
 
 
-<section id="image-container" data-id="0" data-project="<?php echo $projectID; ?>" data-query="<?php outprint($query); ?>" class="loading">
-    <img id="source-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="" />
+<section id="image-container" data-id="0" data-project="<?php echo $projectID; ?>" data-project-id="<?php echo $project["project_id"]; ?>" data-query="<?php outprint($query); ?>" class="loading">
+    <img id="source-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
 </section>
 <section id="image-data">
     <a href="https://e621.net/posts/0" id="source-link" target="_blank">#0</a> | 

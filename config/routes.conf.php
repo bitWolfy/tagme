@@ -136,11 +136,16 @@ class Routes {
             ],
         ],
 
-        "admin" => [
-            "betelgeuse" => [
-                "path" => "admin\\/betelgeuse",
-                "json" => "admin/betelgeuse.php",
+        "betelgeuse" => [
+            "summon" => [
+                "path" => "betelgeuse\\/summon",
+                "json" => "betelgeuse/summon.php",
                 "perm" => UserRank :: MEMBER,
+            ],
+            "list" => [
+                "path" => "betelgeuse",
+                "json" => "betelgeuse/list.json.php",
+                "html" => "betelgeuse/list.html.php",
             ],
         ],
 

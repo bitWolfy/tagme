@@ -107,20 +107,23 @@ export class Project {
                 (newTags.length < oldTags.length / 2)) {    // New tags should not have shrunk by more than 50%
 
                 // Summon Beetlejuice
-                const beetlejuice = await fetch("/admin/betelgeuse.json", {
+                const beetlejuice = await fetch("/betelgeuse/summon.json", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        summoner: $("meta[name=current-user-id]").attr("content"),
+                        project_id: imageContainer.data("project-id"),
+                        post_id: imageContainer.data("id"),
+                        old_tags: oldTags,
+                        new_tags: newTags,
                     }),
                 });
 
                 console.log(await beetlejuice.text());
 
-                location.href = `/projects/${projectID}/resolve/`;
+                // location.href = `/projects/${projectID}/resolve/`;
                 working = false;
                 submitbutton.removeAttr("loading");
                 return false;
@@ -128,12 +131,13 @@ export class Project {
 
             // If no changes have been made, simply skip to the next post
             if (oldTags == newTags) {
-                location.href = `/projects/${projectID}/resolve/`;
+                // location.href = `/projects/${projectID}/resolve/`;
                 working = false;
                 submitbutton.removeAttr("loading");
                 return false;
             }
 
+            /*
             // Submit changes to e621
             const response = await fetch(`/projects/${projectID}/resolve/${post.id}.json`, {
                 method: "POST",
@@ -149,6 +153,7 @@ export class Project {
 
             if (data["success"]) location.href = `/projects/${projectID}/resolve/`;
             else $("#resolve-error").removeClass("display-none");
+            */
 
             submitbutton.removeAttr("loading");
             working = false;
