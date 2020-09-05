@@ -8,13 +8,12 @@ $changes = getUserList([ "order" => "changes",]);
 
 ?>
 
-<!--
-<section>
-<section-header>E621 Tagging Project Resolver</section-header>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutpat nisi turpis, sit amet elementum erat ultricies eu. Aenean hendrerit tortor a lacus dapibus laoreet. Suspendisse ligula lorem, faucibus vel pharetra dignissim, pellentesque sit amet nisi. Aliquam pulvinar convallis nulla, eu faucibus nisl. Suspendisse potenti. Donec rutrum, elit sit amet molestie porta, velit velit tempus sapien, vel volutpat purus erat quis urna. Aliquam feugiat vestibulum sapien, vel accumsan purus tempus eu. Nam mollis mauris vitae dignissim hendrerit. Nunc eleifend vel ligula venenatis rutrum. Maecenas at tempus nunc.</p>
-<p>Phasellus sagittis est tellus, vel vestibulum nibh mollis vel. Aenean a bibendum massa. Morbi purus tellus, ultrices eu iaculis eu, tincidunt id turpis. Nunc placerat egestas gravida. Nullam egestas faucibus molestie. Quisque a nunc ut mi rhoncus imperdiet. Fusce nec sagittis urna, in faucibus leo. Vivamus nec venenatis lectus, ac rhoncus neque. Morbi iaculis aliquet posuere. Maecenas egestas libero ac lobortis euismod. Praesent orci ex, suscipit ut lorem nec, ornare accumsan odio.</p>
+<section class="home-blurb">
+<section-header>E621 Tagging Project Assistant</section-header>
+<p>TagMe! is a comprehensive utility, designed to make resolving large-scale tagging projects quick and easy.</p>
+<p>To begin, <a href="/auth/login">log in</a> using your e621 username and API key, which you can find on your <a href="https://e621.net/users/home" target="_blank">user page</a>. Then, select one of the latest projects below, or look for the one you need via the search bar above. When resolving a project, follow the <a href="https://e621.net/help/tagging_checklist" target="_blank">tagging guidelines</a> to the best of your ability. If you are unsure of which option to pick, ask the question in <a href="https://e621.net/static/discord" target="_blank">Discord</a>, or simply skip it and move on to the next image.</p>
+<p>Do not forget that any changes you make are done in your name, and are thus your responsibility. Vandalism will not be tolerated.</p>
 </section>
--->
 
 <section class="home-display">
 
