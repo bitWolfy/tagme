@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.4.11-MariaDB - mariadb.org binary distribution
+-- Server version:               10.4.14-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
 -- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
@@ -10,6 +10,25 @@
 /*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Dumping structure for table tagme.betelgeuse
+CREATE TABLE IF NOT EXISTS `betelgeuse` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT 0,
+  `project_id` int(11) NOT NULL DEFAULT 0,
+  `post_id` int(11) NOT NULL DEFAULT 0,
+  `timestamp` int(11) NOT NULL DEFAULT 0,
+  `old_tags` varchar(5000) NOT NULL DEFAULT '',
+  `new_tags` varchar(5000) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `FK_betelgeuse_user` (`user_id`),
+  KEY `FK_betelgeuse_project` (`project_id`),
+  CONSTRAINT `FK_betelgeuse_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`),
+  CONSTRAINT `FK_betelgeuse_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Data exporting was unselected.
 
 -- Dumping structure for table tagme.comment
 CREATE TABLE IF NOT EXISTS `comment` (
