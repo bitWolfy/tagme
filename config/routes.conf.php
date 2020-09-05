@@ -154,6 +154,10 @@ class Routes {
                 "path" => "cookies",
                 "html" => "misc/cookies.php",
             ],
+            "terms_of_service" => [
+                "path" => "(?:tos|terms_of_service)",
+                "html" => "misc/terms_of_service.php",
+            ],
         ],
 
         "redirect" => [
