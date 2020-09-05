@@ -18,7 +18,7 @@ $response["query"] = $_POST;
 if ((isset($response["query"]["username"]) && !is_null($response["query"]["username"])) &&
     (isset($response["query"]["password"]) && !is_null($response["query"]["password"]))) {
 
-    $remember = isset($response["query"]["remember_me"]) ? $response["query"]["remember_me"] : false;
+    $remember = isset($response["query"]["remember"]) ? filter_var($response["query"]["remember"], FILTER_VALIDATE_BOOLEAN) : false;
 
     // Check in with the esix server
     $serverResponse = Session :: create($response["query"]["username"], $response["query"]["password"], $remember);

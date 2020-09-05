@@ -75,7 +75,7 @@ class Session {
         self :: setSessionCookies(
             $user_token,
             $api_key,
-            (isset($_COOKIE["remember_me"]) && $_COOKIE["remember_me"] == true),
+            $remember,
             time() + (\TagMe\Configuration :: $user_refresh * 60 * 60),
         );
 

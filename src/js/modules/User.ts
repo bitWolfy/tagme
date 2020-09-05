@@ -9,6 +9,7 @@ export class User {
         // Login Form
         const username = $("#userauth-form input[name=username]"),
             apikey = $("#userauth-form input[name=password]"),
+            remember = $("#remember_me"),
             submit = $("#userauth-form button[type=submit]"),
             status = $("#userauth-status");
 
@@ -47,6 +48,7 @@ export class User {
                 body: JSON.stringify({
                     username: username.val() + "",
                     password: apikey.val() + "",
+                    remember: remember.is(":checked"),
                 }),
             });
 
@@ -59,8 +61,8 @@ export class User {
                 if (Page.matches(PageDefintion.auth_login)) location.href = "/";
                 else location.reload();
             } else status.html("Authentication Failed");
-            submit.removeAttr("loading");
 
+            submit.removeAttr("loading");
             return false;
         });
 

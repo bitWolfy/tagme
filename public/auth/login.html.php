@@ -4,6 +4,10 @@
         <input name="username" placeholder="Login" />
         <input name="password" placeholder="API Key" />
         <button type="submit" class="loading-button">Submit</button>
+        <span class="userauth-remember">
+            <input type="checkbox" name="remember_me" id="remember_me" checked>
+            <label for="remember_me">Remember Me</label>
+        </span>
     </form>
     <div id="userauth-status"></div>
     <div id="userauth-text">
