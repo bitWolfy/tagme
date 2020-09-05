@@ -5,11 +5,18 @@ section#image-container {
 
     padding: 0;
     margin-top: 0.5rem;
-    cursor: zoom-in;
 
     & > img {
         max-height: 50vh;
         max-width: 100%;
+        cursor: zoom-in;
+    }
+
+    & > video {
+        max-height: 50vh;
+        max-width: 100%;
+        outline: 0 !important;
+        cursor: pointer;
     }
 
     &.loading {

@@ -28,8 +28,8 @@ if($projectData["count"] == 0 || $projectData["data"]["is_deleted"]) {
 }
 
 $project = $projectData["data"];
-if(is_null($postID)) $query = implode("+", $project["tags"]) . "+order:random+-type:swf+-type:webm";
-else $query = "id:" . $postID . "+-flash+-webm";
+if(is_null($postID)) $query = implode("+", $project["tags"]) . "+order:random+-type:swf";
+else $query = "id:" . $postID . "+-type:swf";
 
 
 $client = new Client([
@@ -44,6 +44,7 @@ $Parsedown = new Parsedown();
 
 <section id="image-container" data-id="0" data-project="<?php echo $projectID; ?>" data-project-id="<?php echo $project["project_id"]; ?>" data-query="<?php outprint($query); ?>" class="loading">
     <img id="source-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+    <video id="source-video" loop="loop" controls="controls" class="display-none">
 </section>
 <section id="image-data">
     <a href="https://e621.net/posts/0" id="source-link" target="_blank">#0</a> | 

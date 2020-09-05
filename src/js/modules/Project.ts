@@ -30,12 +30,33 @@ export class Project {
 
         // Fill in the page elements
         imageContainer.attr("data-id", post.id);
-        $("#source-image")
-            .attr("src", post.sample.url)
-            .one("load", () => {
-                imageContainer.removeClass("loading");
-                // $("#source-image").attr("src", post.file.url);
+
+        if (post.file.ext == "webm") {
+            $("#source-image").remove();
+            $("#source-video")
+                .removeClass("display-none")
+                .attr({
+                    "src": post.file.url,
+                    "poster": post.sample.url,
+                });
+            imageContainer.removeClass("loading");
+        } else {
+            $("#source-image")
+                .attr("src", post.sample.url)
+                .one("load", () => {
+                    imageContainer.removeClass("loading");
+                    // $("#source-image").attr("src", post.file.url);
+                });
+            $("#source-video").remove();
+
+            // Initialize the zoom box
+            ($("#image-container") as any).zoom({
+                url: $("#source-image").attr("src"),
+                on: "click",
+                magnify: 0.9,
             });
+        }
+
         $("#source-link")
             .attr("href", "https://e621.net/posts/" + post.id)
             .html("#" + post.id);
@@ -52,12 +73,6 @@ export class Project {
         window.history.replaceState("Object", "Title", "/projects/" + projectID + "/resolve/" + post.id);
 
 
-        // Initialize the zoom box
-        ($("#image-container") as any).zoom({
-            url: $("#source-image").attr("src"),
-            on: "click",
-            magnify: 0.9,
-        });
 
 
         // Actions
