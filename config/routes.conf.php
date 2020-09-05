@@ -149,6 +149,13 @@ class Routes {
             ],
         ],
 
+        "misc" => [
+            "cookies" => [
+                "path" => "cookies",
+                "html" => "misc/cookies.php",
+            ],
+        ],
+
         "redirect" => [
             "projects" => [
                 "path" => "p\\/{%project_id%}",
