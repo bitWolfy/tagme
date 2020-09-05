@@ -26,7 +26,7 @@ export class User {
             }
 
             // Validate the captcha
-            const recaptcha = await grecaptcha.execute("6LeafMgUAAAAALOtMnoNHRCBSu48k0NGKPqllHnh", { action: "submit" });
+            const recaptcha = await grecaptcha.execute($("meta[name=recaptcha]").attr("content"), { action: "submit" });
             console.log(recaptcha);
             const captchaResponse = await fetch(`/auth/captcha.json`, {
                 method: "POST",

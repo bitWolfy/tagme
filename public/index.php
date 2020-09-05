@@ -23,6 +23,7 @@ require_once ROOT . "/lib/tagme-auth/user.php";
 
 use TagMe\PageRouter;
 use TagMe\LibLoader;
+use TagMe\Configuration;
 use TagMe\Auth\Session;
 use TagMe\Auth\User;
 
@@ -63,6 +64,8 @@ ob_start();
     <meta name="og:title" content="<!-- %PAGETITLE% -->">
     <meta name="og:description" content="<!-- %PAGEDESCR% -->">
     <meta name="og:image" content="/static/images/sitelogo.png">
+
+    <meta name="recaptcha" content="<?php echo Configuration :: $recaptcha_key; ?>">
 
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico"/>
     <link rel="icon" type="image/png" href="/static/images/favicon-32x32.png" sizes="32x32">
