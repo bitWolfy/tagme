@@ -58,13 +58,22 @@ class Session {
         unset($lookup);
 
         // Create a token
-        // If a token already exists, delete it
-        $db -> delete("user_tokens", [ "user_id" => $user_id ]);
-        do {
-            $user_token = bin2hex(random_bytes(16));
-            $lookup = $db -> select("user_tokens", "*", [ "token" => $user_token ]);
-        } while(isset($lookup[0]));
-        unset($lookup);
+        // If a token already exists, return it
+        $tokenLookup = $db -> select(
+            "user_tokens",
+            [
+                "user_id[Int]",
+                "token",
+            ],
+            [ "user_id" => $user_id ]
+        );
+        if(count($tokenLookup) == 0) {
+            do {
+                $user_token = bin2hex(random_bytes(16));
+                $tokenLookup = $db -> select("user_tokens", "*", [ "token" => $user_token ]);
+            } while(isset($tokenLookup[0]));
+        } else $user_token = $tokenLookup[0]["token"];
+        unset($tokenLookup);
     
         $db -> insert("user_tokens", [
             "user_id" => $user_id,
