@@ -92,7 +92,7 @@ ob_end_clean ();
 
 // PageData not set
 if(!isset($pageData) || $pageData == false || $pageData == 1) $pageData = [];
-if(!isset($pageData["title"])) $pageData["title"] = "TagMe! - E621 Project Resolver";
+if(!isset($pageData["title"])) $pageData["title"] = "TagMe! - E621 Tagging Project Assistant";
 if(!isset($pageData["descr"])) $pageData["descr"] = "Improve your tagging experience with TagMe! Resolve large tag projects with ease, at lightning-fast speed. Collaborate and compete while improving e621's image searchability.";
 
 // Replace <!-- %PAGETITLE% --> with $pageTitle variable contents, and print the HTML
