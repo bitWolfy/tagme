@@ -97,7 +97,7 @@ foreach( $project["options"] as $action ) {
 </section>
 
 <section id="proceed">
-    <button href="/projects/<?php echo $projectID; ?>/resolve/" class="loading-button" id="page-skip" data-hotkey="s">Skip</button>
+    <button href="/projects/<?php echo $projectID; ?>/resolve/" class="loading-button" id="page-skip" data-hotkey="tab">Skip</button>
     <button href="/projects/<?php echo $projectID; ?>/resolve/" class="loading-button" id="page-submit" data-hotkey="enter">Submit</button>
 </section>
 
