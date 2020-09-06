@@ -8,19 +8,45 @@ section.home-display {
     grid-template-columns: 3fr 1fr;
     grid-column-gap: 1rem;
 
-    section.home-projects {
+    section.home-project-list {
         display: grid;
         grid-template-columns: max-content auto;
         grid-column-gap: 1rem;
-        grid-template-rows: repeat(auto-fill, minmax(1.25rem, max-content));
+        grid-template-rows: repeat(auto-fill, minmax(2rem, max-content));
         padding: 0;
+
+        div.home-project-name {
+            line-height: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        div.home-project-desc {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 1rem;
+            padding: 0.5rem 0;
+        }
     }
 
-    section.home-contributions {
+    section.home-change-list {
         display: grid;
         grid-template-columns: 1fr max-content;
         grid-column-gap: 1rem;
-        grid-template-rows: repeat(auto-fill, minmax(1.25rem, max-content));
+        grid-template-rows: repeat(auto-fill, minmax(2rem, max-content));
         padding: 0;
+
+        div.home-change-name {
+            line-height: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        div.home-change-desc {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 1rem;
+            padding: 0.5rem 0;
+        }
     }
 }

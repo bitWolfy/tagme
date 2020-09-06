@@ -56,11 +56,11 @@ $changesData = getChangesList([ "user_id" => $user_id, "order" => "changes" ]);
     <section-header>Projects: <?php echo $projectData["count"]; ?></section-header>
     <section-header>Contributions: <?php echo $changesData["total"]; ?></section-header>
 
-    <section class="home-projects">
+    <section class="home-project-list">
     <?php foreach($projectData["data"] as $entry) { ?>
 
-        <div><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
-        <div><?php echo $entry["desc"]; ?></div>
+        <div class="home-project-name"><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
+        <div class="home-project-desc" title="<?php outprint(formatProjectText($entry)); ?>"><?php echo $entry["desc"]; ?></div>
 
     <?php } ?>
     </section>
@@ -76,4 +76,14 @@ $changesData = getChangesList([ "user_id" => $user_id, "order" => "changes" ]);
 
 </section>
 
-<?php return [ "title" => $userData["data"]["username"] . " - TagMe!" ]; ?>
+<?php
+
+return [ "title" => $userData["data"]["username"] . " - TagMe!" ];
+
+function formatProjectText($project) {
+    return $project["name"] . " (" . $project["meta"] . ")\n"
+        . $project["desc"] . "\n"
+        . "[" . implode(" ", $project["tags"]) . "]";
+}
+
+?>

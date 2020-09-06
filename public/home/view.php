@@ -20,24 +20,34 @@ $changes = getUserList([ "order" => "changes",]);
     <section-header>Latest Projects</section-header>
     <section-header>Top Contributors</section-header>
 
-    <section class="home-projects">
+    <section class="home-project-list">
     <?php foreach($projects["data"] as $entry) { ?>
 
-        <div><a href="/projects/<?php outprint($entry["meta"]); ?>"><?php outprint($entry["name"]); ?></a></div>
-        <div><?php outprint($entry["desc"]); ?></div>
+        <div class="home-project-name"><a href="/projects/<?php outprint($entry["meta"]); ?>"><?php outprint($entry["name"]); ?></a></div>
+        <div class="home-project-desc" title="<?php outprint(formatProjectText($entry)); ?>"><?php outprint($entry["desc"]); ?></div>
 
     <?php } ?>
     </section>
 
-    <section class="home-contributions">
+    <section class="home-change-list">
     <?php foreach($changes["data"] as $entry) { ?>
 
-        <div><a href="/users/<?php outprint($entry["user_id"]); ?>"><?php outprint($entry["username"]); ?></a></div>
-        <div><?php outprint($entry["changes"]); ?></div>
+        <div class="home-change-name"><a href="/users/<?php outprint($entry["user_id"]); ?>"><?php outprint($entry["username"]); ?></a></div>
+        <div class="home-change-desc"><?php outprint($entry["changes"]); ?></div>
 
     <?php } ?>
     </section>
 
 </section>
 
-<?php return []; ?>
+<?php
+
+return [];
+
+function formatProjectText($project) {
+    return $project["name"] . " (" . $project["meta"] . ")\n"
+        . $project["desc"] . "\n"
+        . "[" . implode(" ", $project["tags"]) . "]";
+}
+
+?>
