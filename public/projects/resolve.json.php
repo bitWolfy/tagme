@@ -66,7 +66,7 @@ try {
         "auth" => [ User :: getUsername(), User :: getAPIKey() ],
         "form_params" => [
             "post[tag_string]" => $tags,
-            "post[edit_reason]" => "TagMe! Project tagme.dev/p/" . $projectData["data"]["project_id"],
+            "post[edit_reason]" => "TagMe! Utility Edit tagme.dev/p/" . $projectData["data"]["project_id"],
         ]
     ]);
 } catch (RequestException $exception) {
