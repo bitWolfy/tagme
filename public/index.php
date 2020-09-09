@@ -62,10 +62,16 @@ ob_start();
 <?php } ?>
 
     <!-- Site Metadata -->
-    <meta name="og:site_name" content="TagMe!">
-    <meta name="og:title" content="<!-- %PAGETITLE% -->">
-    <meta name="og:description" content="<!-- %PAGEDESCR% -->">
-    <meta name="og:image" content="/static/images/sitelogo.png">
+    <meta property="og:url" content="<?php echo SITE . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:type" content="<!-- %PAGEXTYPE% -->">
+    <meta property="theme-color" content="#0c2032">
+
+    <meta property="og:site_name" content="TagMe!">
+    <meta property="og:title" content="<!-- %PAGETITLE% -->">
+    <meta property="og:description" content="<!-- %PAGEDESCR% -->">
+    <meta property="og:image" content="<!-- %PAGEIMAGE% -->">
+
+    <meta name="twitter:card" content="<!-- %PAGEXCARD% -->">
 
     <meta name="recaptcha" content="<?php echo Configuration :: $recaptcha_key; ?>">
 
@@ -109,11 +115,17 @@ ob_end_clean ();
 if(!isset($pageData) || $pageData == false || $pageData == 1) $pageData = [];
 if(!isset($pageData["title"])) $pageData["title"] = "TagMe! - E621 Tagging Project Assistant";
 if(!isset($pageData["descr"])) $pageData["descr"] = "Improve your tagging experience with TagMe! Resolve large tag projects with ease, at lightning-fast speed. Collaborate and compete while improving e621's image searchability.";
+if(!isset($pageData["image"])) $pageData["image"] = SITE . "/static/images/sitelogo.png";
+if(!isset($pageData["xtype"])) $pageData["xtype"] = "website";
+if(!isset($pageData["xcard"])) $pageData["xcard"] = false;
 
 // Replace <!-- %PAGETITLE% --> with $pageTitle variable contents, and print the HTML
 $replace = [
     "/<!-- %PAGETITLE% -->/" => $pageData["title"],
     "/<!-- %PAGEDESCR% -->/" => $pageData["descr"],
+    "/<!-- %PAGEIMAGE% -->/" => $pageData["image"],
+    "/<!-- %PAGEXTYPE% -->/" => $pageData["xtype"],
+    "/<!-- %PAGEXCARD% -->/" => $pageData["xcard"] ? "summary_large_image" : "summary",
 ];
 echo preg_replace (array_keys($replace), array_values($replace), $pageContents);
 

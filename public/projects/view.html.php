@@ -111,6 +111,6 @@ $Parsedown -> setSafeMode(true);
 
 <?php return [
     "title" => "Project: " . outescape($project["name"]) . " - TagMe!",
-    "descr" => outescape($project["desc"]) . "\n" . outescape(implode(", ", $project["tags"])),
+    "descr" => outescape($project["desc"]) . " [" . outescape(implode(", ", $project["tags"]) . "]"),
 ];
 ?>

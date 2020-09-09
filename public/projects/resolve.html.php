@@ -6,6 +6,7 @@ require_once ROOT . "/lib/parsedown-1.7.4/Parsedown.php";
 
 use TagMe\PageRouter;
 use TagMe\Auth\User;
+use TagMe\Auth\UserRank;
 use GuzzleHttp\Client;
 use Markdown\Parsedown;
 
@@ -32,10 +33,25 @@ if(is_null($postID)) $query = implode(" ", $project["tags"]) . " order:random -t
 else $query = "id:" . $postID . " -type:swf";
 
 
-$client = new Client([
-    "base_uri" => "https://e621.net/",
-    "timeout"  => 2.0,
-]);
+// ABORT - User Permissions
+// This is done here to set proper metatags for the link previews
+if(!User :: rankMatches(UserRank :: MEMBER)) {
+?>
+
+<section class="project-error">
+    <h2>Error: Access Denied</h2>
+    <p>Only logged in members with over 100 manual edits are permitted to access this page.</p>
+</section>
+    
+<?php
+return [
+    "title" => (is_null($postID) ? "Project: " : ("#" . $postID . " - ")) . outescape($project["name"]) . " - TagMe!",
+    "descr" => outescape($project["desc"]),
+    "image" => is_null($postID) ? null : SITE . "/image/" . $postID . ".jpeg",
+    "xtype" => is_null($postID) ? "website" : "photo",
+    "xcard" => !is_null($postID),
+];
+}
 
 $Parsedown = new Parsedown();
 
@@ -126,6 +142,10 @@ function getTagString($tags) {
 
 return [
     "title" => (is_null($postID) ? "Project: " : ("#" . $postID . " - ")) . outescape($project["name"]) . " - TagMe!",
-    "descr" => outescape($project["desc"]) . " [" . outescape(implode(" ", $project["tags"]) . "]"),
+    "descr" => outescape($project["desc"]),
+    "image" => is_null($postID) ? null : SITE . "/image/" . $postID . ".jpeg",
+    "xtype" => is_null($postID) ? "website" : "photo",
+    "xcard" => !is_null($postID),
 ];
+
 ?>

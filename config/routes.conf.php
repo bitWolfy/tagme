@@ -48,7 +48,6 @@ class Routes {
                 "path" => "projects\\/{%project_id%}\\/resolve(?:\\/{%post_id%})?",
                 "html" => "projects/resolve.html.php",
                 "json" => "projects/resolve.json.php",
-                "perm" => UserRank :: MEMBER,
             ],
             "edit" => [
                 "path" => "projects\\/{%project_id%}\\/edit",
@@ -134,6 +133,13 @@ class Routes {
                 "path" => "comments\\/{%comment_id%}\\/hide",
                 "json" => "comments/hide.json.php",
             ],
+        ],
+        
+        "image" => [
+            "view" => [
+                "path" => "image\\/{%image_id%}",
+                "jpeg" => "image/view.php",
+            ]
         ],
 
         "betelgeuse" => [

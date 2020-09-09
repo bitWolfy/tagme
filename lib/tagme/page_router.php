@@ -36,7 +36,7 @@ class PageRouter {
 				}
 
 				// Convert the template string into a regex
-				$innerPattern = "/^" . $innerPattern . "(?:\\/|\.json)?(?:\?\S+)?$/";
+				$innerPattern = "/^" . $innerPattern . "(?:\\/|\.json|\.jpeg)?(?:\?\S+)?$/";
 				// var_dump($innerPattern);
 				
 				// If the regex matches, dump variables and return
@@ -58,7 +58,9 @@ class PageRouter {
 
 		// Determine output mode
 		$strippedPath = preg_replace("/\?.+$/", "", self :: $address);
-		self :: $outputFormat = preg_match("/\.json$/", $strippedPath) > 0 ? "json" : "html";
+		if(preg_match("/\.json$/", $strippedPath) > 0) self :: $outputFormat = "json";
+		else if(preg_match("/\.jpeg$/", $strippedPath) > 0) self :: $outputFormat = "jpeg";
+		else self :: $outputFormat = "html";
 
 		// Get the page
 		if(isset($match[self :: $outputFormat])) self :: $outputPage = "public/" . $match[self :: $outputFormat];
@@ -77,7 +79,7 @@ class PageRouter {
 
 		return [
 			"page" => self :: $outputPage,
-			"json" => self :: $outputFormat == "json",
+			"json" => self :: $outputFormat == "json" || self :: $outputFormat == "jpeg",
 		];
 	}
 
