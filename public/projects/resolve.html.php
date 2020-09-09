@@ -28,8 +28,8 @@ if($projectData["count"] == 0 || $projectData["data"]["is_deleted"]) {
 }
 
 $project = $projectData["data"];
-if(is_null($postID)) $query = implode("+", $project["tags"]) . "+order:random+-type:swf";
-else $query = "id:" . $postID . "+-type:swf";
+if(is_null($postID)) $query = implode(" ", $project["tags"]) . " order:random -type:swf";
+else $query = "id:" . $postID . " -type:swf";
 
 
 $client = new Client([

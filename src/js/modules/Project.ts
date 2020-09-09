@@ -8,7 +8,7 @@ export class Project {
 
         const imageContainer = $("#image-container"),
             projectID = imageContainer.data("project"),
-            query = imageContainer.data("query");
+            query = imageContainer.data("query").split(" ");
 
         // Load image data
         const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, });
