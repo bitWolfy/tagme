@@ -1,6 +1,7 @@
 import { Page, PageDefintion } from "./components/Page";
 import { Background } from "./modules/Background";
 import { Comment } from "./modules/Comment";
+import { Home } from "./modules/Home";
 import { Hotkeys } from "./modules/Hotkeys";
 import { Project } from "./modules/Project";
 import { ProjectEdit } from "./modules/ProjectEdit";
@@ -13,6 +14,10 @@ window["tagme"] = {
 Background.init();
 User.init();
 Hotkeys.init();
+
+if (Page.matches(PageDefintion.home)) {
+    Home.build();
+}
 
 if (Page.matches(PageDefintion.projects_resolve)) {
     // console.log("project.resolve");
