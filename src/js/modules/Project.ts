@@ -28,6 +28,7 @@ export class Project {
 
         const post = imgData[0];
 
+
         // Fill in the page elements
         imageContainer.attr("data-id", post.id);
 
@@ -72,7 +73,8 @@ export class Project {
 
         window.history.replaceState("Object", "Title", "/projects/" + projectID + "/resolve/" + post.id);
 
-
+        // Prevent opening links when submitting
+        $("a[target=_blank]").on("click", function () { this.blur(); });
 
 
         // Actions
