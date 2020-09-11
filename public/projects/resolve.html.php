@@ -103,7 +103,10 @@ foreach( $project["options"] as $action ) {
 <?php } else { ?>
         <input type="text" id="action-<?php echo $actionIndex; ?>">
 <?php } ?>
-        <label for="action-<?php echo $actionIndex; ?>" data-hotkey="<?php echo $actionIndex == 9 ? 0 : $actionIndex + 1; ?>"><?php echo $action["name"]; ?></label>
+        <label for="action-<?php echo $actionIndex; ?>" data-hotkey="<?php echo $actionIndex == 9 ? 0 : $actionIndex + 1; ?>">
+            <?php echo $actionIndex == 9 ? 0 : $actionIndex + 1; ?>.
+            <?php echo $action["name"]; ?>
+        </label>
         <span class="taglist">
 <?php echo formatChangedTags($action["tadd"], $action["trem"]); ?>
         </span>
