@@ -68,6 +68,9 @@ section.home-display {
         div.home-change-name {
             line-height: 1rem;
             padding: 0.5rem 0;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         div.home-change-desc {

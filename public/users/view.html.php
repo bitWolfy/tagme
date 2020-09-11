@@ -65,11 +65,11 @@ $changesData = getChangesList([ "user_id" => $user_id, "order" => "changes" ]);
     <?php } ?>
     </section>
 
-    <section class="home-contributions">
+    <section class="home-change-list">
     <?php foreach($changesData["data"] as $entry) { ?>
 
-        <div><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
-        <div><?php echo $entry["changes"]; ?></div>
+        <div class="home-change-name"><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
+        <div class="home-change-desc"><?php echo $entry["changes"]; ?></div>
 
     <?php } ?>
     </section>
