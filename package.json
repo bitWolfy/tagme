@@ -1,23 +1,30 @@
 {
     "name": "tagme",
     "namespace": "tagme.dev",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "E621 tag project helper",
     "author": "bitWolfy",
     "main": "./build/script.js",
     "scripts": {
         "build": "npm-run-all prepare compile clean",
-        "compile": "npm-run-all --parallel compile-typescript compile-sass",
+
+        "compile": "npm-run-all --parallel compile-typescript compile-sass compile-buildfile",
+
         "compile-typescript": "npm-run-all eslint typescript browserify",
         "eslint": "eslint ./**/*.ts",
         "typescript": "tsc",
         "browserify": "browserify ./build/main.js -o ./static/assets/script.js",
         "minify": "terser ./static/assets/script.js --compress -o ./static/assets/script.js",
+
         "compile-sass": "npm-run-all sass autoprefixer",
         "sass": "sass ./src/scss/style.scss ./static/assets/style.css --no-source-map --style compressed",
         "autoprefixer": "postcss ./static/assets/style.css --no-map --use autoprefixer -r",
+
+        "compile-buildfile": "node ./bin/buildfile.js",
+
         "prepare": "node ./bin/util.prepare.js",
         "clean": "node ./bin/util.cleanup.js",
+
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

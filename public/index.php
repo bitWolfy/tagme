@@ -12,15 +12,17 @@ require_once ROOT . "/config/settings.conf.php";
 require_once ROOT . "/config/routes.conf.php";
 
 require_once ROOT . "/lib/tagme/common.php";
+require_once ROOT . "/lib/tagme/util.php";
 require_once ROOT . "/lib/tagme/page_router.php";
 require_once ROOT . "/lib/tagme/lib_loader.php";
 require_once ROOT . "/lib/tagme/database.php";
-require_once ROOT . "/lib/tagme/util.php";
+require_once ROOT . "/lib/tagme/version.php";
 
 require_once ROOT . "/lib/tagme-auth/session.php";
 require_once ROOT . "/lib/tagme-auth/esix.php";
 require_once ROOT . "/lib/tagme-auth/user.php";
 
+use TagMe\Version;
 use TagMe\PageRouter;
 use TagMe\LibLoader;
 use TagMe\Configuration;
@@ -48,7 +50,7 @@ ob_start();
     <link rel="stylesheet" href="<?php echo SITE . '/static/libraries/' . $cssLibrary; ?>" />
 <?php } ?>
 
-    <link rel="stylesheet" href="<?php echo SITE; ?>/static/assets/style.css" />
+    <link rel="stylesheet" href="<?php echo SITE; ?>/static/assets/style.css?<?php echo Version :: getBuild(); ?>" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Pacifico&display=swap" rel="stylesheet">
 
 <?php foreach ( $libraries ["js"] as $jsLibrary ) { ?>
@@ -103,7 +105,7 @@ ob_start();
 
 <?php include_once ROOT . "/public/util_common/footer.php"; ?>
 
-<script src="/static/assets/script.js"></script>
+<script src="/static/assets/script.js?<?php echo Version :: getBuild(); ?>"></script>
 </body>
 
 </html>
