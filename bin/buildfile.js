@@ -7,7 +7,7 @@ fs.writeFileSync(
     JSON.stringify({
         "version": package.version,
         "build": getBuildTime(),
-    }, null, 4)
+    }, null, 4) + "\n"
 );
 
 

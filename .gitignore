@@ -106,4 +106,5 @@ typings/
 # Build files
 /build/
 /config/settings.conf.php
+/config/build.json
 /static/assets/
