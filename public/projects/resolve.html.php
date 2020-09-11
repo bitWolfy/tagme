@@ -65,9 +65,9 @@ $Parsedown = new Parsedown();
     <video id="source-video" loop="loop" controls="controls" class="display-none">
 </section>
 <section id="image-data">
-    <a href="https://e621.net/posts/0" id="source-link" target="_blank">#0</a> | 
+    <a href="https://e621.net/posts/0" id="source-link" target="_blank" data-hotkey="p">#0</a> | 
     <span id="source-date">Loading</span> | 
-    <a href="https://e621.net/post_versions?search[post_id]=0" id="source-history" target="_blank">history</a>
+    <a href="https://e621.net/post_versions?search[post_id]=0" id="source-history" target="_blank" data-hotkey="q">history</a>
 </section>
 <section id="title"><a href="/projects/<?php echo $project["meta"]; ?>"><?php echo $project["name"]; ?></a></section>
 <section id="description"><?php echo $project["desc"]; ?></section>
