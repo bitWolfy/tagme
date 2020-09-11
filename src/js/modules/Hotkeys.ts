@@ -7,7 +7,12 @@ export class Hotkeys {
 
         for (const element of $("[data-hotkey]").get()) {
             const $elem = $(element);
-            Mousetrap.bind($elem.data("hotkey") + "", () => { $elem[0].click(); });
+            const keys = $elem.attr("data-hotkey").split("|");
+
+            $elem.attr("title", keys.length == 1 ? `Hotkey: ${keys[0]}` : `Hotkeys: ${keys.join(" / ")}`);
+
+            for (const key of keys)
+                Mousetrap.bind(key, () => { $elem[0].click(); });
         }
     }
 
