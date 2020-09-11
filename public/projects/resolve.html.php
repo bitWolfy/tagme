@@ -141,7 +141,7 @@ foreach( $project["options"] as $action ) {
 <section id="tags">
     <span class="tags-title">Old Tags</span>
     <span class="tags-title">New Tags</span>
-    <textarea id="tags-old"></textarea>
+    <textarea id="tags-old" readonly></textarea>
     <textarea id="tags-new"></textarea>
 </section>
 <?php } ?>
