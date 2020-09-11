@@ -33,9 +33,11 @@ if(is_null($postID)) $query = implode(" ", $project["tags"]) . " order:random -t
 else $query = "id:" . $postID . " -type:swf";
 
 
+$canResolve = User :: rankMatches(UserRank :: MEMBER);
+
 // ABORT - User Permissions
 // This is done here to set proper metatags for the link previews
-if(!User :: rankMatches(UserRank :: MEMBER)) {
+if(!$canResolve && is_null($postID)) {
 ?>
 
 <section class="project-error">
@@ -81,6 +83,12 @@ if($optmode == 0) {
 ???
 <?php } ?>
 </section>
+
+<?php
+// Authorized to resolve
+if($canResolve) {
+?>
+
 <section id="actions">
 
 <?php
@@ -117,14 +125,26 @@ foreach( $project["options"] as $action ) {
     <button href="/projects/<?php echo $projectID; ?>/resolve/" class="loading-button" id="page-submit" data-hotkey="enter">Submit</button>
 </section>
 
+<?php
+} else {
+// Unauthorized
+?>
+
+<section id="proceed-unauthorized">
+    <button href="/projects/<?php echo $projectID; ?>/resolve/" class="loading-button" id="page-skip" data-hotkey="tab">Skip</button>
+</section>
+<?php } ?>
+
 <section id="guidelines" class="markdown"><?php echo $Parsedown -> text($project["text"]); ?></section>
 
+<?php if($canResolve) { ?>
 <section id="tags">
     <span class="tags-title">Old Tags</span>
     <span class="tags-title">New Tags</span>
     <textarea id="tags-old"></textarea>
     <textarea id="tags-new"></textarea>
 </section>
+<?php } ?>
 
 <?php
 

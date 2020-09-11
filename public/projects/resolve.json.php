@@ -9,6 +9,7 @@ use TagMe\Configuration;
 use TagMe\PageRouter;
 use TagMe\Database;
 use TagMe\Auth\User;
+use TagMe\Auth\UserRank;
 
 // Fill in the $_POST data
 $rest_json = file_get_contents("php://input");
@@ -24,7 +25,7 @@ $response = [
 
 
 // FAILURE - Authentication missing
-if(!User :: isLoggedIn()) {
+if(!User :: rankMatches(UserRank :: MEMBER)) {
     $response["error"] = "auth";
     echo json_encode ($response, JSON_PRETTY_PRINT);
     return;
