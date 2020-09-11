@@ -109,9 +109,6 @@ function printOptionHTML($title = "", $tadd = "", $trem = "") {
             <label for="option-name-<?php outprint($elementID); ?>">Title</label>
             <input id="option-name-<?php outprint($elementID); ?>" name="opt-name" placeholder="Display name of the option" required="" pattern="[\S ]{3,32}" class="" value="<?php outprint($title); ?>">
         </div>
-        <div class="option-controls">
-            <button class="options-remove-btn">Remove</button>
-        </div>
         <div class="option-addtags">
             <label for="option-addtags-<?php outprint($elementID); ?>">Added Tags</label>
             <textarea id="option-addtags-<?php outprint($elementID); ?>" name="opt-tadd" placeholder="Tags to add if this option is selected"><?php outprint($tadd); ?></textarea>
@@ -119,6 +116,9 @@ function printOptionHTML($title = "", $tadd = "", $trem = "") {
         <div class="option-remtags">
             <label for="option-remtags-<?php outprint($elementID); ?>">Removed Tags</label>
             <textarea id="option-remtags-<?php outprint($elementID); ?>" name="opt-trem" placeholder="Tags to remove if this option is selected"><?php outprint($trem); ?></textarea>
+        </div>
+        <div class="option-controls">
+            <button class="options-remove-btn">Remove</button>
         </div>
     </div>
 <?php
