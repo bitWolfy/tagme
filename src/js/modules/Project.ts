@@ -48,7 +48,15 @@ export class Project {
                 .attr("src", post.sample.url)
                 .one("load", () => {
                     imageContainer.removeClass("loading");
-                    // $("#source-image").attr("src", post.file.url);
+                })
+                .one("error", () => {
+
+                    // Fallback for images that are missing a sample version
+                    $("#source-image")
+                        .attr("src", post.file.url)
+                        .one("load", () => {
+                            imageContainer.removeClass("loading");
+                        });
                 });
             $("#source-video").remove();
 
