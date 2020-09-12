@@ -14,7 +14,7 @@ export class Project {
         imageContainer.css("height", height);
 
         // Load image data
-        const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, seed: new Date().getTime() });
+        const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 10, seed: new Date().getTime() });
 
         if (imgData[0] == undefined || imgData[0]["sample"]["url"] == null) {
             $("page-container").html(`
@@ -28,7 +28,7 @@ export class Project {
         }
 
         // console.log(imgData);
-        const post = imgData[0];
+        const post = imgData[imgData.length * Math.random() | 0];
 
 
         // Fill in the page elements
