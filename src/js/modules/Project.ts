@@ -14,7 +14,7 @@ export class Project {
         imageContainer.css("height", height);
 
         // Load image data
-        const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, });
+        const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, seed: new Date().getTime() });
 
         if (imgData[0] == undefined || imgData[0]["sample"]["url"] == null) {
             $("page-container").html(`
