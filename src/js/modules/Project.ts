@@ -1,4 +1,5 @@
 import { E621 } from "../components/E621";
+import { Page } from "../components/Page";
 import { APIPost } from "../components/responses/APIPost";
 import { Util } from "../components/Util";
 
@@ -13,9 +14,29 @@ export class Project {
         const height = $(window).height() - $("#guidelines").offset().top + $("#source-image").height();
         imageContainer.css("height", height);
 
-        // Load image data
-        const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 10, randseed: (new Date().getTime() + "").substr(-8) });
+        // Get query parameters
+        let paramPage = (parseInt(Page.getQueryParameter("page")) || 1);
+        if (paramPage < 1 || paramPage > 700) paramPage = 1;
 
+        let paramSeed = Page.getQueryParameter("seed");
+        if (paramSeed == null) {
+            paramSeed = (new Date().getTime() + "").substr(-8);
+            paramPage = 1;
+        }
+
+        Page.removeQueryParameter("page", "seed");
+
+        // Load image data
+        let imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: paramSeed, page: paramPage });
+
+        // Number of pages has exceeded number of posts to display
+        if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && paramPage > 1) {
+            paramSeed = (new Date().getTime() + "").substr(-8);
+            paramPage = 1;
+            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: paramSeed, page: paramPage });
+        }
+
+        // Search is empty
         if (imgData[0] == undefined || imgData[0]["sample"]["url"] == null) {
             $("page-container").html(`
                 <section class="project-error">
@@ -28,7 +49,7 @@ export class Project {
         }
 
         // console.log(imgData);
-        const post = imgData[imgData.length * Math.random() | 0];
+        const post = imgData[0];
 
 
         // Fill in the page elements
@@ -118,7 +139,7 @@ export class Project {
         // Skip / Submit
         $("#page-skip").on("click", (event) => {
             event.preventDefault();
-            location.href = `/projects/${projectID}/resolve/`;
+            location.href = `/projects/${projectID}/resolve?seed=${paramSeed}&page=${paramPage + 1}`;
         });
 
         let working = false;
@@ -185,8 +206,10 @@ export class Project {
             const data = JSON.parse(responseText);
             // console.log(data);
 
-            if (data["success"]) location.href = `/projects/${projectID}/resolve/`;
-            else $("#resolve-error").removeClass("display-none");
+            if (data["success"]) {
+                location.href = `/projects/${projectID}/resolve?seed=${paramSeed}&page=${paramPage + 1}`;
+                await Util.sleep(500); // Throttle the requests slightly to give e621 time to apply tag changes
+            } else $("#resolve-error").removeClass("display-none");
 
             submitbutton.removeAttr("loading");
             working = false;

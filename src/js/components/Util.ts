@@ -1,9 +1,11 @@
 import { UtilID } from "./UtilID";
+import { UtilMath } from "./UtilMath";
 
 /** Common utilities used in other modules */
 export class Util {
 
     public static ID = UtilID;
+    public static Math = UtilMath;
 
     public static LS = window.localStorage;
     public static SS = window.sessionStorage;
