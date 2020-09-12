@@ -69,7 +69,7 @@ $Parsedown -> setSafeMode(true);
         $queryArr = [];
         foreach($project["tags"] as $tag) $queryArr[] = urlencode($tag);
     ?>
-    <a href="https://e621.net/posts?tags=<?php outprint(implode("+", $queryArr)); ?>"><?php outprint(implode(" ", $project["tags"])); ?></a>
+    <a href="https://e621.net/posts?tags=<?php outprint(implode("+", $queryArr)); ?>" target="_blank"><?php outprint(implode(" ", $project["tags"])); ?></a>
 </section>
 <section id="project-info-actions">
     <table>
