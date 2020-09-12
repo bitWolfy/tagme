@@ -3,10 +3,16 @@
 require_once ROOT . "/public/users/_data.php";
 require_once ROOT . "/public/projects/_data.php";
 require_once ROOT . "/public/changes/_data.php";
+require_once ROOT . "/public/comments/_data.php";
+require_once ROOT . "/lib/parsedown-1.7.4/Parsedown.php";
 
 use TagMe\PageRouter;
 use TagMe\Auth\User;
 use TagMe\Auth\UserRank;
+use Markdown\Parsedown;
+
+$Parsedown = new Parsedown();
+$Parsedown -> setSafeMode(true);
 
 $user_id = PageRouter :: getVars("user_id");
 $userData = getUserByID($user_id);
@@ -29,6 +35,7 @@ if($userData["count"] == 0) {
 
 $projectData = getProjectList([ "user" => $user_id ]);
 $changesData = getChangesList([ "user_id" => $user_id, "order" => "changes" ]);
+$commentData = getCommentList([ "user" => $user_id ]);
 
 ?>
 
@@ -74,6 +81,19 @@ $changesData = getChangesList([ "user_id" => $user_id, "order" => "changes" ]);
     <?php } ?>
     </section>
 
+</section>
+
+<section id="comment-list">
+    <section-header>Project Comments</section-header>
+    <?php
+    $norespond = true;
+    foreach($commentData["data"] as $comment) {
+    ?>
+        <a href="/projects/<?php echo $comment["meta"]; ?>" class="comment-project-link"><?php echo $comment["name"]; ?></a>
+    <?php
+        include ROOT . "/public/util_common/comment.php";
+    }
+    ?>
 </section>
 
 <?php

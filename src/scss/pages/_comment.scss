@@ -24,6 +24,10 @@ comment {
     &[data-hidden=true] { background: #ff000010; }
 }
 
+a.comment-project-link {
+    padding: 0 0.5rem;
+}
+
 form#comment-new-form,
 form.comment-edit-form {
     display: flex;

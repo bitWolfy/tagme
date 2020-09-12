@@ -30,13 +30,15 @@ use TagMe\Auth\UserRank;
             </span>
         <?php } ?>
         <comment-actions>
-            <a href="/projects/<?php outprint($projectID . "#comment-" . $comment["id"]); ?>">#<?php outprint($comment["id"]); ?></a>
+            <a href="/projects/<?php outprint($comment["meta"] . "#comment-" . $comment["id"]); ?>">#<?php outprint($comment["id"]); ?></a>
             <?php if(User :: isLoggedIn()) { ?>
                 <?php if(User :: idMatches($comment["user_id"]) || User :: rankMatches(UserRank :: JANITOR)) { ?>
                     <a href="javascript:void(0);" class="comment-edit">Edit</a>
                     <a href="javascript:void(0);" class="comment-hide"><?php echo $comment["is_hidden"] == 1 ? "Restore" : "Hide"; ?></a>
                 <?php } ?>
+                <?php if(!isset($norespond) || !$norespond) { ?>
                 <a href="javascript:void(0);" class="comment-respond">Respond</a>
+                <?php } ?>
             <?php } ?>
         </comment-actions>
     </comment-header>

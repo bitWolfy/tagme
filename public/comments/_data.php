@@ -6,7 +6,7 @@ use TagMe\Database;
 use TagMe\Auth\User;
 use TagMe\Auth\UserRank;
 
-const COMMENT_SEARCH_PARAMS = ["id", "project_id", "meta", "user_id", "username", "added_on", "edited_on", "is_deleted"];
+const COMMENT_SEARCH_PARAMS = ["id", "project_id", "meta", "user_id", "user", "username", "added_on", "edited_on", "is_hidden"];
 
 function getCommentList($query = []) {
 
@@ -94,6 +94,8 @@ function getCommentList($query = []) {
                 "id[Int]",
                 "project_id[Int]",
                 "project.meta",
+                "project.name",
+                "project.user[Int]",
                 "user_id[Int]",
                 "user.username",
                 "added_on",

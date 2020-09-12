@@ -20,6 +20,7 @@ use Tagme\Auth\UserRank;
             <a href="/projects/new" class="header-link">New Project</a>
             <?php } ?>
             <a href="/users/" class="header-link">Users</a>
+            <a href="/comments/" class="header-link">Comments</a>
         </div>
         <div class="nav-auth">
 <?php if(User :: isLoggedIn()) { ?>
