@@ -40,7 +40,7 @@
 
     <input-group>
         <input-label>Tag String</input-label>
-        <input type="text" name="tags" placeholder="ex. -solo -duo -group -zero_pictured" required pattern="^[\S ]{3,127}$" value="<?php outprint(isset($edit["tags"]) ? implode(" ", $edit["tags"]) : ""); ?>">
+        <input type="text" name="tags" placeholder="ex. -solo -duo -group -zero_pictured" required pattern="^[\S ]{3,10000}$" value="<?php outprint(isset($edit["tags"]) ? implode(" ", $edit["tags"]) : ""); ?>">
     </input-group>
     <input-group class="input-descr">
         Posts that match this space-separated list of tags will be displayed when resolving the project.<br />
