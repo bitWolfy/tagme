@@ -1,4 +1,5 @@
 <?php
+use TagMe\Configuration;
 use TagMe\Util;
 use TagMe\Auth\User;
 use TagMe\Auth\UserRank;
@@ -20,7 +21,7 @@ use TagMe\Auth\UserRank;
         <span class="comment-date" title="<?php outprint(date("y-m-d h:i", $comment["added_on"])); ?>">
             <?php outprint(Util :: to_time_ago($comment["added_on"])); ?>
         </span>
-        <?php if($comment["edited_on"] > $comment["added_on"]) { ?>
+        <?php if($comment["edited_on"] > $comment["added_on"] + (Configuration :: $edit_threshold * 60)) { ?>
             <span class="text-muted">
                 (edited 
                 <span class="comment-date" title="<?php outprint(date("y-m-d h:i", $comment["edited_on"])); ?>">
