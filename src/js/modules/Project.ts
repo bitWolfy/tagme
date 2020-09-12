@@ -93,9 +93,9 @@ export class Project {
             const removedTags: Set<string> = new Set();
             for (const input of actions.find("input:checked")) {
                 const $parent = $(input).parent();
-                for (const tag of $parent.attr("data-added").split(" "))
+                for (const tag of ($parent.attr("data-added") || "").split(" ").filter((el) => el !== ""))
                     addedTags.add(tag);
-                for (const tag of $parent.attr("data-removed").split(" "))
+                for (const tag of ($parent.attr("data-removed") || "").split(" ").filter((el) => el !== ""))
                     removedTags.add(tag);
             }
 
@@ -103,7 +103,8 @@ export class Project {
             let processedTags = [...allTags];
 
             removedTags.forEach((tag) => {
-                const regex = new RegExp(tag.replace(/\*/, "(?:.*)"));
+                if (tag == "") return;
+                const regex = new RegExp(tag.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/, "(?:.*)"));
                 processedTags = processedTags.filter(element => !regex.test(element));
             })
 
