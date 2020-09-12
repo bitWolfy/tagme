@@ -40,6 +40,7 @@ $libraries = LibLoader :: load();
 // Buffer output
 ob_start();
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>

@@ -7,13 +7,13 @@ section#image-container {
     margin-top: 0.5rem;
 
     & > img {
-        max-height: 50vh;
+        max-height: 100%;
         max-width: 100%;
         cursor: zoom-in;
     }
 
     & > video {
-        max-height: 50vh;
+        max-height: 100%;
         max-width: 100%;
         outline: 0 !important;
         cursor: pointer;
@@ -23,7 +23,7 @@ section#image-container {
         position: relative;
 
         img {
-            height: 30vh;
+            height: 75%;
             width: 50%;
             background: #ffffff20;
         }

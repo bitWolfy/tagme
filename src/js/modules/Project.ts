@@ -10,6 +10,9 @@ export class Project {
             projectID = imageContainer.data("project"),
             query = imageContainer.data("query").split(" ");
 
+        const height = $(window).height() - $("#guidelines").offset().top + $("#source-image").height();
+        imageContainer.css("height", height);
+
         // Load image data
         const imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, });
 
@@ -25,7 +28,6 @@ export class Project {
         }
 
         // console.log(imgData);
-
         const post = imgData[0];
 
 
@@ -54,7 +56,7 @@ export class Project {
             ($("#image-container") as any).zoom({
                 url: $("#source-image").attr("src"),
                 on: "click",
-                magnify: 0.9,
+                magnify: 1.1,
             });
         }
 
