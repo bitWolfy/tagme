@@ -123,7 +123,7 @@ export class Comment {
             console.log(text);
             Debug.log(JSON.parse(text));
 
-            // location.reload();
+            location.reload();
 
             working = false;
             return false;
