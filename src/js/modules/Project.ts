@@ -1,3 +1,4 @@
+import { Debug } from "../components/Debug";
 import { E621 } from "../components/E621";
 import { Page } from "../components/Page";
 import { APIPost } from "../components/responses/APIPost";
@@ -20,14 +21,20 @@ export class Project {
 
         let paramSeed = Page.getQueryParameter("seed");
         if (paramSeed == null) {
-            paramSeed = (new Date().getTime() + "").substr(-8);
+            paramSeed = (new Date().getTime() + "").substr(-6);
             paramPage = 1;
         }
+        query.push("randseed:" + paramSeed);
+
+        Debug.log({
+            page: paramPage,
+            seed: paramSeed,
+        });
 
         Page.removeQueryParameter("page", "seed");
 
         // Load image data
-        let imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: paramSeed, page: paramPage });
+        let imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: paramPage });
 
         // Number of pages has exceeded number of posts to display
         if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && paramPage > 1) {
