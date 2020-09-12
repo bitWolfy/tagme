@@ -84,6 +84,11 @@ export class Comment {
             const $comment = $(event.currentTarget).parents("comment"),
                 $input = $comment.find("textarea[name=content]").first();
 
+            if (!($input[0] as HTMLInputElement).checkValidity()) {
+                $comment.find("comment-error").html("Error: invalid comment format");
+                return;
+            }
+
             const response = await fetch(`/comments/${$comment.data("id")}/edit.json`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -97,7 +102,7 @@ export class Comment {
 
             location.reload();
 
-            working = false;
+            // working = false;
             return false;
         });
 
@@ -109,7 +114,12 @@ export class Comment {
             if (working) return;
             working = true;
 
-            console.log(Util.getCleanInputValue($newCommentInput), $commentAddForm.data("project"));
+            // console.log(Util.getCleanInputValue($newCommentInput), $commentAddForm.data("project"));
+
+            if (!($newCommentInput[0] as HTMLInputElement).checkValidity()) {
+                $commentAddForm.find("comment-error").html("Error: invalid comment format");
+                return;
+            }
 
             const response = await fetch("/comments/new.json", {
                 method: "POST",
@@ -125,7 +135,7 @@ export class Comment {
 
             location.reload();
 
-            working = false;
+            // working = false;
             return false;
         });
     }

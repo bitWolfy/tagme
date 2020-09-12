@@ -106,9 +106,10 @@ $Parsedown -> setSafeMode(true);
 <section id="comment-new">
     <section-header>New Comment</section-header>
     <form id="comment-new-form" data-project="<?php echo $project["project_id"]; ?>">
-        <textarea name="content" id="comment-new-content"></textarea>
+        <textarea name="content" id="comment-new-content" required pattern="^.{3,10000}$"></textarea>
         <button type="submit">Submit</button>
-        <span><a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax</a> is supported.</span>
+        <span class="comment-error"></span>
+        <span class="comment-help"><a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax</a> is supported.</span>
     </form>
 </section>
 <?php } ?>

@@ -36,10 +36,18 @@ form.comment-edit-form {
         outline: 0 !important;
         resize: vertical;
     }
+
     button[type=submit] {
         width: 5rem;
     }
-    span {
+    
+    span.comment-error{
+        color: coral;
+        margin-left: 1rem;
+    }
+
+    span.comment-help {
         margin-left: auto;
+        font-size: 90%;
     }
 }

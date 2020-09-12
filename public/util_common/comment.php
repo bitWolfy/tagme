@@ -45,12 +45,13 @@ use TagMe\Auth\UserRank;
         <?php echo $Parsedown -> text($comment["content"]); ?>
     </comment-body>
 
-    <?php if(\TagMe\Auth\User :: getUserID() == $comment["user_id"]) { ?>
+    <?php if(User :: getUserID() == $comment["user_id"]) { ?>
         <comment-edit class="display-none">
             <form class="comment-edit-form">
-                <textarea name="content" class="comment-content"><?php echo outprint($comment["content"]); ?></textarea>
+                <textarea name="content" class="comment-content" required pattern="^.{3,10000}$"><?php echo outprint($comment["content"]); ?></textarea>
                 <button type="submit">Submit</button>
-                <span><a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax</a> is supported.</span>
+                <span class="comment-error"></span>
+                <span class="comment-help"><a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax</a> is supported.</span>
             </form>
         </comment-edit>
     <?php } else { ?>
