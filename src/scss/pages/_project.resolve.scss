@@ -111,6 +111,11 @@ section#actions {
             font-size: 0.8rem;
             flex: 1;
             border-radius: 0 0 0.125rem 0.125rem;
+
+            max-height: 4rem;
+            overflow: hidden scroll;
+
+            @include scrollbars;
         }
     }
 }
