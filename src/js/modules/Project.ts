@@ -127,16 +127,8 @@ export class Project {
                     removedTags.add(tag);
             }
 
-            let allTags = new Set(Util.getTags($("#tags-old")));
-            let processedTags = [...allTags];
-
-            removedTags.forEach((tag) => {
-                if (tag == "") return;
-                const regex = new RegExp(tag.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/, "(?:.*)"));
-                processedTags = processedTags.filter(element => !regex.test(element));
-            })
-
-            allTags = new Set(processedTags);
+            const allTags = new Set(Util.getTags($("#tags-old")));
+            removedTags.forEach((tag) => { allTags.delete(tag); })
             addedTags.forEach((tag) => { allTags.add(tag); })
 
             $("#tags-new").val([...allTags].join(" "));
