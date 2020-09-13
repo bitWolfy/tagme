@@ -13,14 +13,17 @@ export class Background {
         const seed = Math.random();
 
         let paletteName = Util.LS.getItem("tagme.theme") || "dusk";
-        const toggle = $("#theme-swtich")
+        const toggle = $("#theme-switch")
             .html(Background.getPaletteIcon(paletteName))
+            .attr("title", "Theme: " + paletteName.toUpperCase())
             .on("click", (event) => {
                 event.preventDefault();
 
                 if (paletteName == "dawn") paletteName = "dusk";
                 else paletteName = "dawn";
-                toggle.html(Background.getPaletteIcon(paletteName))
+                toggle
+                    .html(Background.getPaletteIcon(paletteName))
+                    .attr("title", "Theme: " + paletteName.toUpperCase());
 
                 Util.LS.setItem("tagme.theme", paletteName);
                 Background.patch(seed, paletteName);
