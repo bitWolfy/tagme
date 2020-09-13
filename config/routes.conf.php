@@ -63,7 +63,7 @@ class Routes {
                 "path" => "projects\\/{%project_id%}\\/delete",
                 "json" => "projects/delete.json.php",
                 "html" => "projects/delete.html.php",
-                "perm" => UserRank :: JANITOR,
+                "perm" => UserRank :: PRIVILEGED,
             ],
             "view" => [
                 "path" => "projects\\/{%project_id%}",

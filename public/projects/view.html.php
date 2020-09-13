@@ -56,8 +56,8 @@ $Parsedown -> setSafeMode(true);
             <a href="/projects/<?php outprint($projectID); ?>/edit" class="action-edit">Edit</a>
         <?php } ?>
 
-        <?php if(User :: rankMatches(UserRank :: JANITOR)) { ?>
-            <a href="/projects/<?php outprint($projectID); ?>/delete<?php echo $project["is_deleted"] ? "?restore=true" : ""; ?>" class="action-delete"><?php echo $project["is_deleted"] ? "Restore" : "Delete"; ?></a>
+        <?php if(User :: rankMatches(UserRank :: JANITOR) || User :: getUserID() == $project["user"]) { ?>
+            <a href="/projects/<?php outprint($projectID); ?>/delete<?php echo $project["is_deleted"] ? "?restore=true" : ""; ?>" class="action-delete"><?php echo $project["is_deleted"] ? "Restore" : "Remove"; ?></a>
         <?php } ?>
     </div>
 </section>

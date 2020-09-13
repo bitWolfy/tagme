@@ -47,6 +47,8 @@ section.home-display {
         div.home-project-name {
             line-height: 1rem;
             padding: 0.5rem 0;
+
+            &.deleted { background: #ff000030; }
         }
 
         div.home-project-desc {
@@ -55,6 +57,8 @@ section.home-display {
             white-space: nowrap;
             line-height: 1rem;
             padding: 0.5rem 0;
+
+            &.deleted { background: #ff000030; }
         }
     }
 

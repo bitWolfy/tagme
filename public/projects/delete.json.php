@@ -26,7 +26,7 @@ if($projectData["count"] == 0) {
 
 // Check that the user has permissions to edit the post
 if(!User :: rankMatches(UserRank :: JANITOR) && User :: getUserID() != $projectData["data"]["user"]) {
-    require_once ROOT . "/static/error/403.json.php";
+    require_once ROOT . "/static/error/403.html.php";
     return;
 }
 

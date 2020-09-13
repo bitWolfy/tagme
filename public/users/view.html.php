@@ -65,9 +65,10 @@ $commentData = getCommentList([ "user" => $user_id ]);
 
     <section class="home-project-list">
     <?php foreach($projectData["data"] as $entry) { ?>
+        <?php if($entry["is_deleted"] && (!User :: rankMatches(UserRank :: JANITOR) && User :: getUserID() != $entry["user"])) continue; ?>
 
-        <div class="home-project-name"><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
-        <div class="home-project-desc" title="<?php outprint(formatProjectText($entry)); ?>"><?php echo $entry["desc"]; ?></div>
+        <div class="home-project-name <?php if($entry["is_deleted"]) echo "deleted";?>"><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
+        <div class="home-project-desc <?php if($entry["is_deleted"]) echo "deleted";?>" title="<?php outprint(formatProjectText($entry)); ?>"><?php echo $entry["desc"]; ?></div>
 
     <?php } ?>
     </section>
