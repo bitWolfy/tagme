@@ -114,7 +114,7 @@ section#actions {
             border-radius: 0 0 0.125rem 0.125rem;
 
             max-height: 4rem;
-            overflow: hidden scroll;
+            overflow: hidden auto;
 
             @include scrollbars;
         }
