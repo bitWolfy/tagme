@@ -168,7 +168,7 @@ class Routes {
 
         "redirect" => [
             "projects" => [
-                "path" => "p\\/{%project_id%}",
+                "path" => "p\\/{%project_id%}(?:\\/{%post_id%})?",
                 "json" => "redirect/projects.php",
                 "html" => "redirect/projects.php",
             ],
