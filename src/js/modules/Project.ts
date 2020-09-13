@@ -49,7 +49,7 @@ export class Project {
                 <section class="project-error">
                     <h2>Error - No Image Found</h2>
                     <p>The API query returned empty. Either there are no more posts to sort through, or an error has occurred.</p>
-                    <p>Either way, there is nothing more to be done here. <a href="/projects/<?php echo $project -> id; ?>">Return to the project page</a>.</p>
+                    <p>Either way, there is nothing more to be done here. <a href="/projects/${projectID}">Return to the project page</a>.</p>
                 </section>
             `);
             return;
