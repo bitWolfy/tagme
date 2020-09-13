@@ -6,6 +6,26 @@ import { Util } from "../components/Util";
 
 export class Project {
 
+    private static shuffleEnabled = true;
+
+    public static initSwitch(): void {
+        Project.shuffleEnabled = Util.LS.getItem("tagme.shuffle") !== "false";
+        const toggle = $("#random-switch")
+            .html(Project.getShuffleIcon(Project.shuffleEnabled))
+            .attr("title", "Mode: " + (Project.shuffleEnabled ? "SHUFFLE" : "REPEAT"))
+            .on("click", (event) => {
+                event.preventDefault();
+
+                Project.shuffleEnabled = !Project.shuffleEnabled;
+                toggle
+                    .html(Project.getShuffleIcon(Project.shuffleEnabled))
+                    .attr("title", "Mode: " + (Project.shuffleEnabled ? "SHUFFLE" : "SHUFFLE"));
+
+                Util.LS.setItem("tagme.shuffle", Project.shuffleEnabled + "");
+                return false;
+            });
+    }
+
     public static async build(): Promise<void> {
 
         const imageContainer = $("#image-container"),
@@ -24,7 +44,6 @@ export class Project {
             paramSeed = (new Date().getTime() + "").substr(-6);
             paramPage = 1;
         }
-        query.push("randseed:" + paramSeed);
 
         Debug.log({
             page: paramPage,
@@ -33,15 +52,24 @@ export class Project {
 
         Page.removeQueryParameter("page", "seed");
 
-        // Load image data
-        let imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: paramPage });
+        // Set up the shuffle switcher
+        Project.shuffleEnabled = Util.LS.getItem("tagme.shuffle") !== "false";
 
-        // Number of pages has exceeded number of posts to display
-        if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && paramPage > 1) {
-            paramSeed = (new Date().getTime() + "").substr(-8);
-            paramPage = 1;
-            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: paramSeed, page: paramPage });
-        }
+        // Load image data
+        console.time("test");
+        let imgData: APIPost[];
+        if (Project.shuffleEnabled) {
+            query.push("randseed:" + paramSeed);
+            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: paramPage });
+
+            // Number of pages has exceeded number of posts to display
+            if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && paramPage > 1) {
+                paramSeed = (new Date().getTime() + "").substr(-8);
+                paramPage = 1;
+                imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: paramSeed, page: paramPage });
+            }
+        } else imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 320, page: 1 });
+        console.timeLog("test", "proc");
 
         // Search is empty
         if (imgData[0] == undefined || imgData[0]["sample"]["url"] == null) {
@@ -56,7 +84,8 @@ export class Project {
         }
 
         // console.log(imgData);
-        const post = imgData[0];
+        const post = imgData[~~(imgData.length * Math.random())];
+        console.timeEnd("test");
 
 
         // Fill in the page elements
@@ -214,6 +243,10 @@ export class Project {
             working = false;
             return false;
         });
+    }
+
+    private static getShuffleIcon(state: boolean): string {
+        return state ? `<i class="fas fa-random"></i>` : `<i class="fas fa-repeat"></i>`;
     }
 
 }

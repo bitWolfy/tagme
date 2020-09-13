@@ -33,8 +33,8 @@ use Tagme\Auth\UserRank;
     </nav>
 
     <div class="side-links">
-        <a id="theme-swtich"></a>
         <a id="theme-switch" title="Theme: DUSK"></a>
+        <a id="random-switch" title="Mode: SHUFFLE"></a>
     </div>
 
 </header>
