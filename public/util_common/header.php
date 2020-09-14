@@ -34,7 +34,6 @@ use Tagme\Auth\UserRank;
 
     <div class="side-links">
         <a id="theme-switch" title="Theme: DUSK"></a>
-        <a id="random-switch" title="Mode: SHUFFLE"></a>
     </div>
 
 </header>

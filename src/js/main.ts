@@ -23,7 +23,6 @@ if (Page.matches(PageDefintion.projects_resolve)) {
     // console.log("project.resolve");
     Project.build();
 }
-Project.initSwitch();
 
 if (Page.matches([PageDefintion.projects_new, PageDefintion.projects_edit])) {
     // console.log("project.edit");
