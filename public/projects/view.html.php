@@ -2,6 +2,7 @@
 
 require_once ROOT . "/public/projects/_data.php";
 require_once ROOT . "/public/comments/_data.php";
+require_once ROOT . "/public/users/_data.php";
 require_once ROOT . "/lib/parsedown-1.7.4/Parsedown.php";
 
 use TagMe\PageRouter;
@@ -30,6 +31,7 @@ if($projectData["count"] == 0) {
 }
 
 $project = $projectData["data"];
+$author = getUserByID($project["user"]);
 $Parsedown = new Parsedown();
 $Parsedown -> setSafeMode(true);
 ?>
@@ -60,8 +62,11 @@ $Parsedown -> setSafeMode(true);
             <a href="/projects/<?php outprint($projectID); ?>/delete<?php echo $project["is_deleted"] ? "?restore=true" : ""; ?>" class="action-delete"><?php echo $project["is_deleted"] ? "Restore" : "Remove"; ?></a>
         <?php } ?>
     </div>
+    <div class="page-info">
+        by <a href="/users/<?php echo $author["data"]["user_id"] ?>"><?php echo $author["data"]["username"]; ?></a>
+    </div>
 </section>
-<section>
+<section id="project-desc">
     <?php outprint($project["desc"]); ?>
 </section>
 <section id="project-info-tags">
