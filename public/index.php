@@ -96,7 +96,7 @@ ob_start();
 
 </head>
 
-<body>
+<body page="<?php echo $output["name"]; ?>" altmode="true">
 
 <?php include_once ROOT . "/public/util_common/header.php"; ?>
 

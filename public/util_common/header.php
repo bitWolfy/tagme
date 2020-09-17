@@ -34,6 +34,7 @@ use Tagme\Auth\UserRank;
 
     <div class="side-links">
         <a id="theme-switch" title="Theme: DUSK"></a>
+        <a id="mode-switch" title="Mode: NARROW"></a>
     </div>
 
 </header>

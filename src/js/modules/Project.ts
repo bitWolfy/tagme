@@ -59,7 +59,6 @@ export class Project {
 
         // console.log(imgData);
         const post = imgData[~~(imgData.length * Math.random())];
-        console.timeEnd("test");
 
 
         // Fill in the page elements
@@ -76,7 +75,7 @@ export class Project {
             imageContainer.removeClass("loading");
         } else {
             $("#source-image")
-                .attr("src", post.sample.url)
+                .attr("src", $("body").attr("altmode") ? post.file.url : post.sample.url)
                 .one("load", () => {
                     imageContainer.removeClass("loading");
                 })

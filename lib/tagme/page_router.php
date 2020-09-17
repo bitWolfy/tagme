@@ -22,6 +22,7 @@ class PageRouter {
 		self :: $address = trim($_SERVER['REQUEST_URI'], " \t\n\r\0\x0B/");							// trim garbage data
 		self :: $stack = explode("/", preg_replace('/\\.[^.\\s]{3,4}$/', '', self :: $address));	// remove extension
 
+		$name = null;
 		$match = null;
 		$varPattern = "/\{%(" . self :: VAR_MATCH . ")%\}/";
 		foreach($routes_list as $group => $entries) {
@@ -42,6 +43,7 @@ class PageRouter {
 				// If the regex matches, dump variables and return
 				if(preg_match($innerPattern, self :: $address, $patternMatches)) {
 					// var_dump($patternMatches);
+					$name = $group . "." . $route_name;
 					$match = $route;
 
 					// Collect variable values
@@ -78,6 +80,7 @@ class PageRouter {
 		// var_dump($match, self :: $outputPage, self :: $outputFormat);
 
 		return [
+			"name" => $name,
 			"page" => self :: $outputPage,
 			"json" => self :: $outputFormat == "json" || self :: $outputFormat == "jpeg",
 		];

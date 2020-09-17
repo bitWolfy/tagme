@@ -6,12 +6,15 @@ import { Hotkeys } from "./modules/Hotkeys";
 import { Project } from "./modules/Project";
 import { ProjectEdit } from "./modules/ProjectEdit";
 import { User } from "./modules/User";
+import { ViewMode } from "./modules/ViewMode";
 
 window["tagme"] = {
     "useragent": "dev.tagme/resolver/0.1",
 };
 
 Background.init();
+ViewMode.init();
+
 User.init();
 Hotkeys.init();
 

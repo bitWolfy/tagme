@@ -1,21 +1,30 @@
 /** Common Styles for All Pages **/
 body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
     background: $back-color;
     color: #ddd;
     font-family: "Open Sans", sans-serif;
-    margin: 0.5rem;
+    margin: 0.5rem 1.5rem;
 }
 
 page-container {
     display: block;
     box-sizing: border-box;
-    max-width: 900px;
     min-height: 10vh;
-    margin: 0 auto;
     padding: 0.5rem 0;
     background: $page-color;
     border-radius: 0.35rem 0.35rem 0.5rem 0.5rem;
 }
+
+page-container, header {
+    width: 100%;
+    max-width: 900px;
+}
+body[viewmode="wide"] page-container,
+body[viewmode="wide"] header { max-width: 1440px; }
 
 section {
     display: block;
