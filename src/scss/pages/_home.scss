@@ -19,7 +19,6 @@ section.home-counters {
         font-size: 1.25rem;
         margin-bottom: -0.5rem;
         display: flex;
-        align-items: end;
     }
 
     div.home-counters-projects {
@@ -32,57 +31,30 @@ section.home-blurb {
     p { margin: 0.25rem 0; }
 }
 
-section.home-display {
+section.home-group {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    grid-column-gap: 1rem;
+    grid-column-gap: 0.5rem;
 
-    section.home-project-list {
-        display: grid;
-        grid-template-columns: max-content auto;
-        grid-column-gap: 1rem;
-        grid-template-rows: repeat(auto-fill, minmax(2rem, max-content));
-        padding: 0;
+    table {
+        width: 100%;
+        table-layout: fixed;
 
-        div.home-project-name {
-            line-height: 1rem;
-            padding: 0.5rem 0;
-
+        tr {
+            &.private { background: #ffc80020; }
             &.deleted { background: #ff000030; }
         }
 
-        div.home-project-desc {
-            text-overflow: ellipsis;
-            overflow: hidden;
+        td {
             white-space: nowrap;
-            line-height: 1rem;
-            padding: 0.5rem 0;
-
-            &.deleted { background: #ff000030; }
-        }
-    }
-
-    section.home-change-list {
-        display: grid;
-        grid-template-columns: 1fr max-content;
-        grid-column-gap: 1rem;
-        grid-template-rows: repeat(auto-fill, minmax(2rem, max-content));
-        padding: 0;
-
-        div.home-change-name {
-            line-height: 1rem;
-            padding: 0.5rem 0;
-            white-space: nowrap;
-            text-overflow: ellipsis;
             overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        div.home-change-desc {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            line-height: 1rem;
-            padding: 0.5rem 0;
+        td.home-projects-title { width: 35%; }
+        td.home-changes-count {
+            width: 3rem;
+            text-align: right;
         }
     }
 }

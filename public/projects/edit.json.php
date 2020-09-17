@@ -45,7 +45,8 @@ if (
     (!isset($_POST["text"]) || !preg_match("/^.{3,10000}$/s", $_POST["text"])) ||
     (!isset($_POST["tags"]) || !is_array($_POST["tags"])) ||
     (!isset($_POST["optmode"]) || !preg_match("/^(0|1)$/", $_POST["optmode"])) ||
-    (!isset($_POST["options"]) || !is_array($_POST["options"]))
+    (!isset($_POST["options"]) || !is_array($_POST["options"])) || 
+    (!isset($_POST["private"]) || !preg_match("/^(0|1)$/", $_POST["private"]))
 ) {
     $response["error"] = "error.format";
     echo json_encode ($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -79,6 +80,7 @@ $db -> update(
         "tags[JSON]" => stripArrTags($_POST["tags"]),
         "optmode" => $_POST["optmode"] == "1" ? 1 : 0,
         "options[JSON]" => $options,
+        "is_private" => $_POST["private"] == "1" ? 1 : 0,
     ],
     [ "meta" => $projectID ]);
 

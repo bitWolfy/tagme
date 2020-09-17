@@ -1,5 +1,6 @@
 section.page-title {
     
+    &[data-private=true] { background: #ffc80020; }
     &[data-deleted=true] { background: #ff000030; }
 }
 

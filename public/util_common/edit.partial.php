@@ -88,6 +88,20 @@ if(isset($edit["options"])) {
     <input-group class="input-descr">
     </input-group>
 
+    <input-group>
+        <input-label>Project Visibility</input-label>
+        <input-section>
+            <input type="radio" id="private-0" name="private" value="0" <?php outprint((!isset($edit["is_private"]) || $edit["is_private"] == "0") ? "checked" : ""); ?>>
+            <label for="private-0">Public</label>
+
+            <input type="radio" id="private-1" name="private" value="1" <?php outprint((isset($edit["is_private"]) && $edit["is_private"] == "1") ? "checked" : ""); ?>>
+            <label for="private-1">Unlisted</label>
+        </input-section>
+    </input-group>
+    <input-group class="input-descr">
+        Unlisted projects are still available via a direct link, but not visible in the project list.
+    </input-group>
+
     <div class="submit-group">
         <div></div>
         <div id="submit-response"></div>

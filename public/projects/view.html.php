@@ -45,8 +45,9 @@ $Parsedown -> setSafeMode(true);
     data-desc="<?php outprint($project["desc"]); ?>"
     data-tags="<?php outprint(implode(" ", $project["tags"])); ?>"
     data-optmode="<?php outprint($project["optmode"]); ?>"
-    data-deleted="<?php echo $project["is_deleted"] ? "true" : "false" ?>"
+    data-deleted="<?php echo $project["is_deleted"] ? "true" : "false"; ?>"
     data-changes="<?php outprint($project["changes"]); ?>"
+    data-private="<?php echo $project["is_private"] ? "true" : "false"; ?>"
 >
     <section-header><?php outprint($project["name"]); ?></section-header>
     <div class="page-actions">
@@ -64,6 +65,8 @@ $Parsedown -> setSafeMode(true);
     </div>
     <div class="page-info">
         by <a href="/users/<?php echo $author["data"]["user_id"] ?>"><?php echo $author["data"]["username"]; ?></a>
+        <?php if($project["is_private"]) { ?><span class="project-label"> | Unlisted</span><?php } ?>
+        <?php if($project["is_deleted"]) { ?><span class="project-label"> | Deleted</span><?php } ?>
     </div>
 </section>
 <section id="project-desc">

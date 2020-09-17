@@ -6,7 +6,7 @@ use TagMe\Util;
 use TagMe\Configuration;
 use Tagme\Database;
 
-const PROJECT_SEARCH_PARAMS = ["project_id", "name", "meta", "user", "is_deleted", "changes"];
+const PROJECT_SEARCH_PARAMS = ["project_id", "name", "meta", "user", "is_deleted", "changes", "is_private"];
 
 function getProjectList($query = []) {
 
@@ -98,6 +98,7 @@ function getProjectList($query = []) {
                 "options[JSON]",
                 "is_deleted[Bool]",
                 "changes[Int]" => Medoo\Medoo::raw("SUM(<project_changes.changes>)"),
+                "is_private[Bool]",
             ],
             array_merge($searchParams, $pageParams)
         );

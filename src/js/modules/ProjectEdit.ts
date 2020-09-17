@@ -124,6 +124,7 @@ export class ProjectEdit {
                 tags: Util.getUniqueTags(inputTags),
                 optmode: form.find("[name=optmode]:checked").val() == "1" ? 1 : 0,
                 options: [],
+                private: form.find("[name=private]:checked").val() == "1" ? 1 : 0,
             };
 
             for (const optEntry of optData.get()) {

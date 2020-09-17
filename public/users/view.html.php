@@ -39,6 +39,7 @@ $commentData = getCommentList([ "user" => $user_id ]);
 
 ?>
 
+
 <section class="page-title">
     <section-header>
         <?php echo $userData["data"]["username"]; ?>
@@ -58,31 +59,38 @@ $commentData = getCommentList([ "user" => $user_id ]);
 </section>
 
 
-<section class="home-display">
-
-    <section-header>Projects: <?php echo $projectData["count"]; ?></section-header>
-    <section-header>Contributions: <?php echo $changesData["total"]; ?></section-header>
-
-    <section class="home-project-list">
-    <?php foreach($projectData["data"] as $entry) { ?>
-        <?php if($entry["is_deleted"] && (!User :: rankMatches(UserRank :: JANITOR) && User :: getUserID() != $entry["user"])) continue; ?>
-
-        <div class="home-project-name <?php if($entry["is_deleted"]) echo "deleted";?>"><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
-        <div class="home-project-desc <?php if($entry["is_deleted"]) echo "deleted";?>" title="<?php outprint(formatProjectText($entry)); ?>"><?php echo $entry["desc"]; ?></div>
-
-    <?php } ?>
-    </section>
-
-    <section class="home-change-list">
-    <?php foreach($changesData["data"] as $entry) { ?>
-
-        <div class="home-change-name"><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></div>
-        <div class="home-change-desc"><?php echo $entry["changes"]; ?></div>
-
-    <?php } ?>
-    </section>
-
+<section class="home-group">
+    <div class="home-projects">
+        <section-header>Projects: <?php echo $projectData["count"]; ?></section-header>
+        <table>
+        <?php foreach($projectData["data"] as $entry) { ?>
+        <?php
+                if($entry["is_deleted"] && (!User :: rankMatches(UserRank :: JANITOR) && User :: getUserID() != $entry["user"])) continue;
+                
+                $classes = [];
+                if($entry["is_deleted"]) $classes[] = "deleted";
+                if($entry["is_private"]) $classes[] = "private";
+            ?>
+            <tr <?php if(count($classes) > 0) echo "class=\"" . implode(" ", $classes) . "\""; ?>>
+                <td class="home-projects-title"><a href="/projects/<?php outprint($entry["meta"]); ?>"><?php outprint($entry["name"]); ?></a></td>
+                <td class="home-projects-descr" title="<?php outprint(formatProjectText($entry)); ?>"><?php outprint($entry["desc"]); ?></td>
+            </tr>
+        <?php } ?>
+        </table>
+    </div>
+    <div class="home-changes">
+        <section-header>Changes: <?php echo $changesData["total"]; ?></section-header>
+        <table>
+        <?php foreach($changesData["data"] as $entry) { ?>
+            <tr>
+                <td class="home-changes-title"><a href="/projects/<?php outprint($entry["meta"]); ?>"><?php outprint($entry["name"]); ?></a></td>
+                <td class="home-changes-count"><?php echo $entry["changes"]; ?></td>
+            </tr>
+        <?php } ?>
+        </table>
+    </div>
 </section>
+
 
 <section id="comment-list">
     <section-header>Project Comments</section-header>

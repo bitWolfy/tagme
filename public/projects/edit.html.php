@@ -49,6 +49,7 @@ $edit = [
     "tags" => $project["tags"],
     "optmode" => $project["optmode"],
     "options" => $project["options"],
+    "is_private" => $project["is_private"],
 ];
 
 ?>
