@@ -64,7 +64,7 @@ $commentData = getCommentList([ "user" => $user_id ]);
         <section-header>Projects: <?php echo $projectData["count"]; ?></section-header>
         <table>
         <?php foreach($projectData["data"] as $entry) { ?>
-        <?php
+            <?php
                 if($entry["is_deleted"] && (!User :: rankMatches(UserRank :: JANITOR) && User :: getUserID() != $entry["user"])) continue;
                 
                 $classes = [];

@@ -4,11 +4,14 @@ section.project-list {
     table { width: 100%; }
     thead th:first-child { text-align: left }
     tbody {
-        td {
-            text-align: center;
-            &:first-child { text-align: left; }
+        tr {
+            &.private { background: #ffc80020; }
+            &.deleted { background: #ff000030; }
         }
-        tr[data-deleted=true] { background: #ff000030; }
+        td {
+            text-align: left;
+            &:last-child { text-align: center; }
+        }
     }
 
 }

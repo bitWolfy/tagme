@@ -4,9 +4,17 @@ require_once ROOT . "/public/changes/_data.php";
 require_once ROOT . "/public/projects/_data.php";
 require_once ROOT . "/public/users/_data.php";
 
+use TagMe\Auth\User;
+use TagMe\Auth\UserRank;
+
 $changes = getChangesList([]);
-$projects = getProjectList([ "is_deleted" => "false", "is_private" => "false" ]);
 $users = getUserList([ "order" => "changes", ]);
+
+$projectOpt = User :: rankMatches(UserRank :: JANITOR)
+    ? []
+    : $projectOpt = [ "is_deleted" => "false", "is_private" => "false" ];
+$projects = getProjectList($projectOpt);
+
 
 ?>
 
@@ -39,7 +47,12 @@ $users = getUserList([ "order" => "changes", ]);
         <section-header>Latest Projects</section-header>
         <table>
         <?php foreach($projects["data"] as $entry) { ?>
-            <tr>
+            <?php
+                $classes = [];
+                if($entry["is_deleted"]) $classes[] = "deleted";
+                if($entry["is_private"]) $classes[] = "private";
+            ?>
+            <tr <?php if(count($classes) > 0) echo "class=\"" . implode(" ", $classes) . "\""; ?>>
                 <td class="home-projects-title"><a href="/projects/<?php outprint($entry["meta"]); ?>"><?php outprint($entry["name"]); ?></a></td>
                 <td class="home-projects-descr" title="<?php outprint(formatProjectText($entry)); ?>"><?php outprint($entry["desc"]); ?></td>
             </tr>

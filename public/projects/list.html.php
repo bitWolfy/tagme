@@ -8,11 +8,19 @@ use TagMe\Auth\UserRank;
 
 if(!isset($_GET["is_deleted"])) $_GET["is_deleted"] = "false";
 
-$lookup = getProjectList($_GET);
+$projectOpt = $_GET;
+if(User :: rankMatches(UserRank :: JANITOR)) {
+    $projectOpt["is_deleted"] = "any";
+    $projectOpt["is_private"] = "any";
+} else {
+    $projectOpt["is_deleted"] = "false";
+    $projectOpt["is_private"] = "false";
+};
+
+$lookup = getProjectList($projectOpt);
 
 $count = $lookup["count"];
 $result = $lookup["data"];
-
 
 // Pagination
 $currentPage = (isset($_GET["page"]) && is_numeric($_GET["page"])) ? $_GET["page"] : 1;
@@ -35,7 +43,12 @@ $maxPage = ceil($count / Configuration :: $page_length);
         </tr></thead>
         <tbody>
         <?php foreach($result as $entry) { ?>
-            <tr class="project-row" data-deleted="<?php echo $entry["is_deleted"] ? "true" : "false"; ?>">
+            <?php
+                $classes = [ "project-row" ];
+                if($entry["is_deleted"]) $classes[] = "deleted";
+                if($entry["is_private"]) $classes[] = "private";
+            ?>
+            <tr class="<?php echo implode(" ", $classes); ?>">
                 <td><a href="/projects/<?php echo $entry["meta"]; ?>"><?php echo $entry["name"]; ?></a></td>
                 <td><?php echo $entry["desc"]; ?></td>
                 <td><?php echo $entry["changes"]; ?></td>
