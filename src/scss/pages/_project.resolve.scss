@@ -115,6 +115,7 @@ section#actions {
 
             max-height: 4rem;
             overflow: hidden auto;
+            white-space: nowrap;
 
             @include scrollbars;
         }
