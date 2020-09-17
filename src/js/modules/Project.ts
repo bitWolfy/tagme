@@ -8,8 +8,10 @@ export class Project {
 
     public static async build(): Promise<void> {
 
-        const imageContainer = $("#image-container"),
-            projectID = imageContainer.data("project"),
+        const imageContainer = $("#image-container");
+        if (imageContainer.length == 0) return;
+
+        const projectID = imageContainer.data("project"),
             query = imageContainer.data("query").split(" ");
 
         const height = $(window).height() - $("#guidelines").offset().top + $("#source-image").height();
