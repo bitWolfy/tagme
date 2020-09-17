@@ -75,8 +75,11 @@ export class Project {
             imageContainer.removeClass("loading");
         } else {
             $("#source-image")
-                .attr("src", $("body").attr("altmode") ? post.file.url : post.sample.url)
+                .attr("src", post.sample.url)
                 .one("load", () => {
+                    $("#source-image").attr("src", post.file.url);
+                    imageContainer.find("img[role='presentation']").attr("src", post.file.url);
+
                     imageContainer.removeClass("loading");
                 })
                 .one("error", () => {
