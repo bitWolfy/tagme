@@ -1,7 +1,7 @@
 {
     "name": "tagme",
     "namespace": "tagme.dev",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "E621 tag project helper",
     "author": "bitWolfy",
     "main": "./build/script.js",
