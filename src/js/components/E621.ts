@@ -301,11 +301,6 @@ export class E621 {
 
 
         if (method !== "GET") {
-            if (this.authToken == undefined) {
-                Debug.log("authToken is undefined, regenerating");
-                this.authToken = $("head meta[name=csrf-token]").attr("content");
-            }
-            requestBody["authenticity_token"] = encodeURIComponent(this.authToken);
             requestInfo.body = FormattedAPIQuery.stringify(requestBody);
         }
 
@@ -313,6 +308,11 @@ export class E621 {
         query["_client"] = window["tagme"]["useragent"];
         query["login"] = $("meta[name=current-user-name]").attr("content");
         query["api_key"] = Util.readCookie("api_key");
+
+        if (!query["login"] || !query["api_key"]) {
+            delete query["login"];
+            delete query["api_key"];
+        }
 
         const entry = new Request("https://e621.net/" + path + "?" + FormattedAPIQuery.stringify(query), requestInfo);
         const index = this.requestIndex++;

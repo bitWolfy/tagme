@@ -108,7 +108,10 @@ export class Project {
         $("#source-history").attr("href", "https://e621.net/post_versions?search[post_id]=" + post.id);
         $("#tags-old, #tags-new").val(APIPost.getTagString(post));
 
-        $("textarea").height($("textarea")[0].scrollHeight);
+        for (const textarea of $("textarea").get()) {
+            const $elem = $(textarea);
+            $elem.height($elem[0].scrollHeight);
+        }
 
         // Correct the page title and URL
         const title = $("title");
