@@ -202,3 +202,23 @@ section#tags {
         background: lightgrey;
     }
 }
+
+
+/* Alternative Mode */
+body[page="projects.resolve"][viewmode="wide"] {
+    page-container {
+        display: grid;
+        grid-template-columns: 1fr 12rem;
+    }
+
+    section#image-container { grid-area: 1 / 1 / 10 / 2; }
+    section#image-data { grid-area: 10 / 1 / 10 / 3; }
+    section#title { grid-area: 11 / 1 / 11 / 3; }
+    section#description { grid-area: 1 / 2; }
+    section#actions-hint { grid-area: 2 / 2; }
+    section#actions { grid-area: 3 / 2; }
+    section#resolve-error { grid-area: 14 / 1 / 15 /3; }
+    section#proceed { grid-area: 15 / 1 / 16 / 3; }
+    section#guidelines { grid-area: 19 / 1 / 20 / 3; }
+    section#tags { grid-area: 20 / 1 / 21 / 4; }
+}
