@@ -67,7 +67,7 @@ try {
         "auth" => [ User :: getUsername(), User :: getAPIKey() ],
         "form_params" => [
             "post[tag_string]" => $tags,
-            "post[edit_reason]" => "TagMe! Utility Edit tagme.dev/p/" . $projectData["data"]["project_id"] . "/" . $projectData["data"]["meta"],
+            "post[edit_reason]" => Configuration :: $commit_signature . " " . Configuration :: $site_root . "/p/" . $projectData["data"]["project_id"] . "/" . $projectData["data"]["meta"],
         ]
     ]);
 } catch (RequestException $exception) {
