@@ -8,4 +8,8 @@ export class UtilMath {
         return min <= value && max >= value;
     }
 
+    public static random(length: number): number {
+        return parseInt((new Date().getTime() + "").substr(-length));
+    }
+
 }

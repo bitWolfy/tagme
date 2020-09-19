@@ -2,6 +2,7 @@ import { Debug } from "../components/Debug";
 import { E621 } from "../components/E621";
 import { Page } from "../components/Page";
 import { APIPost } from "../components/responses/APIPost";
+import { Sequence } from "../components/Sequence";
 import { Util } from "../components/Util";
 
 export class Project {
@@ -12,37 +13,37 @@ export class Project {
         if (imageContainer.length == 0) return;
 
         const projectID = imageContainer.data("project"),
-            query = imageContainer.data("query").split(" ");
+            query = imageContainer.data("query").split(" "),
+            unrandom = imageContainer.data("static");
 
         const height = $(window).height() - $("#guidelines").offset().top + $("#source-image").height();
         imageContainer.css("height", height);
 
         // Get query parameters
-        let paramPage = (parseInt(Page.getQueryParameter("page")) || 1);
-        if (paramPage < 1 || paramPage > 700) paramPage = 1;
-
-        let paramSeed = Page.getQueryParameter("seed");
-        if (paramSeed == null) {
-            paramSeed = (new Date().getTime() + "").substr(-6);
-            paramPage = 1;
-        }
-
+        let sequence = Sequence.get(projectID);
         Debug.log({
-            page: paramPage,
-            seed: paramSeed,
+            page: sequence.page,
+            seed: sequence.seed,
         });
 
         Page.removeQueryParameter("page", "seed");
 
         // Load image data
-        query.push("randseed:" + paramSeed);
-        let imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: paramPage });
+        let imgData: APIPost[];
+        if (unrandom) imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: 1 });
+        else {
+            query.push("randseed:" + sequence.seed);
+            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: sequence.page });
+        }
 
         // Number of pages has exceeded number of posts to display
-        if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && paramPage > 1) {
-            paramSeed = (new Date().getTime() + "").substr(-8);
-            paramPage = 1;
-            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: paramSeed, page: paramPage });
+        if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && sequence.page > 1) {
+            console.log((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && sequence.page > 1);
+            console.log(imgData[0] == undefined);
+            console.log(imgData[0]["sample"]["url"] == null);
+            console.log(sequence.page);
+            sequence = Sequence.reset(projectID);
+            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: sequence.seed, page: sequence.page });
         }
 
         // Search is empty
@@ -146,7 +147,8 @@ export class Project {
         // Skip / Submit
         $("#page-skip").on("click", (event) => {
             event.preventDefault();
-            location.href = `/projects/${projectID}/resolve?seed=${paramSeed}&page=${paramPage + 1}`;
+            if (!unrandom) Sequence.increment(projectID);
+            location.href = `/projects/${projectID}/resolve`;
         });
 
         let working = false;
@@ -214,7 +216,8 @@ export class Project {
             // console.log(data);
 
             if (data["success"]) {
-                location.href = `/projects/${projectID}/resolve?seed=${paramSeed}&page=${paramPage + 1}`;
+                if (!unrandom) Sequence.increment(projectID);
+                location.href = `/projects/${projectID}/resolve`;
                 await Util.sleep(500); // Throttle the requests slightly to give e621 time to apply tag changes
             } else $("#resolve-error").removeClass("display-none");
 
