@@ -5,6 +5,7 @@ require_once ROOT . "/public/comments/_data.php";
 require_once ROOT . "/public/users/_data.php";
 require_once ROOT . "/lib/parsedown-1.7.4/Parsedown.php";
 
+use TagMe\Configuration;
 use TagMe\PageRouter;
 use Markdown\Parsedown;
 use TagMe\Auth\User;
@@ -55,7 +56,7 @@ $Parsedown -> setSafeMode(true);
             <a href="/projects/<?php outprint($projectID); ?>/resolve" class="action-resolve">Resolve</a>
         <?php } ?>
 
-        <?php if(User :: rankMatches(UserRank :: JANITOR) || User :: getUserID() == $project["user"]) { ?>
+        <?php if(User :: rankMatches(UserRank :: JANITOR) || (User :: getUserID() == $project["user"]) && $project["changes"] < Configuration :: $project_lock) { ?>
             <a href="/projects/<?php outprint($projectID); ?>/edit" class="action-edit">Edit</a>
         <?php } ?>
 
@@ -65,8 +66,10 @@ $Parsedown -> setSafeMode(true);
     </div>
     <div class="page-info">
         by <a href="/users/<?php echo $author["data"]["user_id"] ?>"><?php echo $author["data"]["username"]; ?></a>
-        <?php if($project["is_private"]) { ?><span class="project-label"> | Unlisted</span><?php } ?>
-        <?php if($project["is_deleted"]) { ?><span class="project-label"> | Deleted</span><?php } ?>
+        <?php if($project["is_private"]) { ?>| <span class="project-label" title="Project is only publicly visible to you">Unlisted</span><?php } ?>
+        <?php if($project["is_deleted"]) { ?>| <span class="project-label" title="Project has been disabled, no further changes can be made">Deleted</span><?php } ?>
+        <?php if($project["changes"] >= Configuration :: $project_lock) { ?>| <span class="project-label" title="Project can no longer be edited">Locked</span> <?php } ?>
+        | <?php echo $project["changes"]; ?> Contributions
     </div>
 </section>
 <section id="project-desc">

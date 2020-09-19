@@ -2,6 +2,7 @@
 
 require_once ROOT . "/public/projects/_data.php";
 
+use TagMe\Configuration;
 use TagMe\PageRouter;
 use TagMe\Auth\User;
 use TagMe\Auth\UserRank;
@@ -28,7 +29,7 @@ if($projectData["count"] == 0) {
 $project = $projectData["data"];
 
 
-if(!User :: rankMatches(UserRank :: JANITOR) && User :: getUserID() != $project["user"]) {
+if(!(User :: rankMatches(UserRank :: JANITOR) || (User :: getUserID() == $project["user"]) && $project["changes"] < Configuration :: $project_lock)) {
     require_once ROOT . "/static/error/403.html.php";
     return;
 }

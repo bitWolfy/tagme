@@ -28,6 +28,7 @@ class Configuration {
     public static $user_create = 1000;      // changes needed for Privileged rank
     public static $user_refresh = 24;       // how often user data gets synced from e621
     public static $user_max_strikes = 3;    // strikes to summon beetlejuice
+    public static $project_lock = 100;      // changes before the project can no longer be edited
 
     // Pagination
     public static $page_length = 100;
