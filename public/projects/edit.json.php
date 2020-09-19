@@ -74,7 +74,6 @@ $db -> update(
     "project",
     [
         "name" => strip_tags($_POST["name"]),
-        "user" => User :: getUserID(),
         "desc" => strip_tags($_POST["desc"]),
         "text" => strip_tags($_POST["text"]),
         "tags[JSON]" => stripArrTags($_POST["tags"]),
