@@ -40,7 +40,7 @@ export class Comment {
             });
 
             const text = await response.text();
-            console.log(text);
+            // console.log(text);
             Debug.log(JSON.parse(text));
 
             if (isHidden) $button.text("Hide");
@@ -130,7 +130,7 @@ export class Comment {
             })
 
             const text = await response.text();
-            console.log(text);
+            // console.log(text);
             Debug.log(JSON.parse(text));
 
             location.reload();

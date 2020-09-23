@@ -27,7 +27,7 @@ export class User {
 
             // Validate the captcha
             const recaptcha = await grecaptcha.execute($("meta[name=recaptcha]").attr("content"), { action: "submit" });
-            console.log(recaptcha);
+            // console.log(recaptcha);
             const captchaResponse = await fetch(`/auth/captcha.json`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -36,7 +36,7 @@ export class User {
             });
 
             const captchaText = await captchaResponse.text();
-            console.log(captchaText);
+            // console.log(captchaText);
             if (!JSON.parse(captchaText)["success"]) {
                 status.html("Authentication Failed");
                 return false;
@@ -53,7 +53,7 @@ export class User {
             });
 
             const responseText = await response.text();
-            console.log(responseText);
+            // console.log(responseText);
             const data = JSON.parse(responseText);
 
             // Response evaluation
@@ -88,7 +88,7 @@ export class User {
 
             $banButton.text(unban ? "Ban" : "Unban");
 
-            console.log(await banAction.text());
+            // console.log(await banAction.text());
 
             return false;
         });

@@ -1,3 +1,4 @@
+import { Debug } from "./Debug";
 import { Util } from "./Util";
 
 export class Sequence {
@@ -8,7 +9,7 @@ export class Sequence {
 
     private constructor() {
         this.sequences = JSON.parse(Util.LS.getItem("tagme.sequence") || "{}")
-        console.log("loaded sequences", this.sequences);
+        Debug.log("loaded sequences", this.sequences);
 
         const now = Util.Time.now();
         for (const [name, entry] of Object.entries(this.sequences))
