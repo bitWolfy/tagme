@@ -88,7 +88,7 @@ export class User {
 
             $banButton.text(unban ? "Ban" : "Unban");
 
-            // console.log(await banAction.text());
+            console.log(await banAction.text());
 
             return false;
         });
