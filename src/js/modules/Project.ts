@@ -13,6 +13,7 @@ export class Project {
         if (imageContainer.length == 0) return;
 
         const projectID = imageContainer.data("project"),
+            projectName = imageContainer.data("project-name"),
             query = imageContainer.data("query").split(" "),
             unrandom = imageContainer.data("static");
 
@@ -112,7 +113,7 @@ export class Project {
 
         // Correct the page title and URL
         const title = $("title");
-        title.html("#" + post.id + " - Character Count Tags - TagMe!");
+        title.html("#" + post.id + " - " + projectName + " - TagMe!");
 
         window.history.replaceState("Object", "Title", "/projects/" + projectID + "/resolve/" + post.id);
 
