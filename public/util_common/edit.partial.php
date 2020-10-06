@@ -7,19 +7,26 @@
         Title of the tagging project. Displayed on in the project list and on the resolution page.
     </input-group>
 
-    <?php if(!isset($edit) || !isset($edit["hide_meta"]) || !$edit["hide_meta"]) { ?>
+    
     <input-group>
         <input-label id="input-meta-label">
             Meta Name
             <span id="input-meta-invalid"></span>
         </input-label>
-        <input type="text" name="meta" placeholder="" required pattern="^[\d\w_]{3,16}$" value="<?php printInputValue($edit, "meta"); ?>">
+        <input
+            type="text"
+            name="meta"
+            placeholder=""
+            required
+            pattern="^[\d\w_]{3,16}$"
+            value="<?php printInputValue($edit, "meta"); ?>"
+            <?php if(isset($edit) && isset($edit["hide_meta"]) && $edit["hide_meta"]) { echo "disabled"; } ?>
+        >
     </input-group>
     <input-group class="input-descr">
         Short name, used primarily in the page URL. Should (roughly) match the project title.<br />
         Can only contain letters, numbers, and underscores.
     </input-group>
-    <?php } ?>
 
     <input-group>
         <input-label>Description</input-label>

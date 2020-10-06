@@ -19,6 +19,10 @@ form#project-new {
             border-left-color: orangered;
             box-shadow: none;
         }
+
+        &[disabled] {
+            color: white;
+        }
     }
 
     textarea[name=text] { height: 120px; }
