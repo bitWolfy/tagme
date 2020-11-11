@@ -65,7 +65,7 @@ export class Comment {
                 quotedText.push("> " + line);
 
             $newCommentInput.val((index, value) => {
-                const newValue = `> ${$comment.data("username")} said:  \n` + quotedText.join("\n");
+                const newValue = `> ${$comment.data("username")} said:  \n` + quotedText.join("\n") + "\n";
                 if (value.length == 0) return newValue;
                 else return value + "\n" + newValue;
             });
