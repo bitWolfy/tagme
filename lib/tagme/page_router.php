@@ -8,7 +8,7 @@ use TagMe\Auth\User;
 
 class PageRouter {
 
-	private const VAR_MATCH = "[a-z0-9_]+";		// pattern that the template variables must follow
+	private const VAR_MATCH = "[a-zA-Z0-9_]+";		// pattern that the template variables must follow
 
 	private static $address = "";           	// trimmed page address, ex. projects/nchar/resolve/12345
 	private static $stack = array();        	// same as above, exploded, ex. [ "projects", "nchar", "resolve", "12345" ]
