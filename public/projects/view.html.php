@@ -53,7 +53,7 @@ $Parsedown -> setSafeMode(true);
     <section-header><?php outprint($project["name"]); ?></section-header>
     <div class="page-actions">
         <?php if(User :: rankMatches(UserRank :: MEMBER)) { ?>
-            <a href="/projects/<?php outprint($projectID); ?>/resolve" class="action-resolve">Resolve</a>
+            <a href="/projects/<?php outprint($projectID); ?>/resolve" class="action-resolve">Start Tagging</a>
         <?php } ?>
 
         <?php if(User :: rankMatches(UserRank :: JANITOR) || (User :: getUserID() == $project["user"]) && $project["changes"] < Configuration :: $project_lock) { ?>
@@ -69,7 +69,7 @@ $Parsedown -> setSafeMode(true);
         <?php if($project["is_private"]) { ?>| <span class="project-label" title="Project is only publicly visible to you">Unlisted</span><?php } ?>
         <?php if($project["is_deleted"]) { ?>| <span class="project-label" title="Project has been disabled, no further changes can be made">Deleted</span><?php } ?>
         <?php if($project["changes"] >= Configuration :: $project_lock) { ?>| <span class="project-label" title="Project can no longer be edited">Locked</span> <?php } ?>
-        | <?php echo $project["changes"]; ?> Contributions
+        <?php echo $project["changes"]; ?> Contributions
     </div>
 </section>
 <section id="project-desc">
