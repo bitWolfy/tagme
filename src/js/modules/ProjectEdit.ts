@@ -79,7 +79,8 @@ export class ProjectEdit {
             if (newVal.length < 3 || newVal == originalName) return;
 
             timer = window.setTimeout(async () => {
-                const serverResponse = await fetch("/projects/" + ($input.val() + "") + ".json");
+                console.log(newVal);
+                const serverResponse = await fetch("/projects/" + newVal + ".json");
                 const response = await serverResponse.json();
                 if (response.data !== null) $metaInputError.html("Already Taken");
             }, 400);
