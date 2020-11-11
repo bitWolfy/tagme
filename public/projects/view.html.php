@@ -56,6 +56,10 @@ $Parsedown -> setSafeMode(true);
             <a href="/projects/<?php outprint($projectID); ?>/resolve" class="action-resolve">Start Tagging</a>
         <?php } ?>
 
+        <?php if(User :: rankMatches(UserRank :: PRIVILEGED)) { ?>
+            <a href="/projects/new/<?php outprint($projectID); ?>" class="action-edit">Clone</a>
+        <?php } ?>
+
         <?php if(User :: rankMatches(UserRank :: JANITOR) || (User :: getUserID() == $project["user"]) && $project["changes"] < Configuration :: $project_lock) { ?>
             <a href="/projects/<?php outprint($projectID); ?>/edit" class="action-edit">Edit</a>
         <?php } ?>

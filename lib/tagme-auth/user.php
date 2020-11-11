@@ -47,6 +47,7 @@ class User {
     public static function getUserID() { return User :: $user_id; }
     public static function idMatches($user_id) { return User :: $user_id == $user_id; }
     public static function getUsername() { return User :: $username; }
+    public static function getURLUsername() { return preg_replace('/\s+/', '_', strtolower(User :: $username)); }
     public static function getAPIKey() { return User :: $api_key; }
     
     public static function getRank() { return User :: $rank; }

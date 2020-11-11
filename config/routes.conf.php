@@ -39,7 +39,7 @@ class Routes {
         "projects" => [
         
             "new" => [
-                "path" => "projects\\/new",
+                "path" => "projects\\/new(?:\\/{%project_id%})?",
                 "html" => "projects/new.html.php",
                 "json" => "projects/new.json.php",
                 "perm" => UserRank :: PRIVILEGED,

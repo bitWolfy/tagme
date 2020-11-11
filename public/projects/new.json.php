@@ -1,5 +1,7 @@
 <?php
 
+require_once ROOT . "/public/projects/_data.php";
+
 use TagMe\Database;
 use TagMe\Auth\User;
 
@@ -20,7 +22,7 @@ $response["query"] = $_POST;
 // Preliminary validation
 if (
     (!isset($_POST["name"]) || !preg_match("/^[\d\w_:!@#&*()_\-+ ]{3,64}$/", $_POST["name"])) ||
-    (!isset($_POST["meta"]) || !preg_match("/^[\d\w_]{3,16}$/", $_POST["meta"])) ||
+    (!isset($_POST["meta"]) || !preg_match("/^[\d\w_]{3,16}$/", $_POST["meta"]) || getProjectByID($_POST["meta"])["count"] !== 0) ||
     (!isset($_POST["desc"]) || !preg_match("/^.{3,255}$/s", $_POST["desc"])) ||
     (!isset($_POST["text"]) || !preg_match("/^.{3,10000}$/s", $_POST["text"])) ||
     (!isset($_POST["tags"]) || !is_array($_POST["tags"])) ||
@@ -29,6 +31,7 @@ if (
     (!isset($_POST["private"]) || !preg_match("/^(0|1)$/", $_POST["private"]))
 ) {
     $response["error"] = "error.format";
+    $response["test"] = getProjectByID($_POST["meta"]);
     echo json_encode ($response, JSON_PRETTY_PRINT);
     return;
 }

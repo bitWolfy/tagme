@@ -96,7 +96,7 @@ export const PageDefintion = {
     home: /^(\/)?$/,
     projects_resolve: /^\/projects\/[\d\w_]+\/resolve(\/\d{1,10})?\/?$/,
     projects_edit: /^\/projects\/[\d\w_]+\/edit\/?$/,
-    projects_new: /^\/projects\/new\/?$/,
+    projects_new: /^\/projects\/new(?:\/[\d\w_]+)?\/?$/,
     projects_view: /^\/projects\/[\d\w_]+\/?/,
     projects_list: /^\/projects\/?$/,
     auth_login: /^\/auth\/login\/?$/,
