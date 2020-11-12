@@ -12,15 +12,15 @@ class Configuration {
     // User-Agent definitions
     // userfixr : used for low-frequency actions - authentication, user info fetching, etc
     // resolver : used for high-frequency actions - primarily resolving projects
-    public static $agent_userfixr = "dev.tagme/userfixr/0.1";
-    public static $agent_resolver = "dev.tagme/resolver/0.1";
+    public static $agent_userfixr = "sample.tagme/userfixr/0.1";
+    public static $agent_resolver = "sample.tagme/resolver/0.1";
 
     // Google ReCaptcha configuration
     public static $recaptcha_key = "";
     public static $recaptcha_secret = "";
 
     // E621 Configuration
-    public static $commit_signature = "Tagging Utility Edit";
+    public static $commit_signature = "Tagging Sample Edit";
     public static $site_root = "sample.com";
 
     // User limits
