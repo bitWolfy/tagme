@@ -185,6 +185,7 @@ export class Project {
 
                 console.log(await beetlejuice.text());
 
+                Sequence.increment(projectID);
                 location.href = `/projects/${projectID}/resolve/`;
                 working = false;
                 submitbutton.removeAttr("loading");
@@ -193,6 +194,7 @@ export class Project {
 
             // If no changes have been made, simply skip to the next post
             if (oldTags == newTags) {
+                Sequence.increment(projectID);
                 location.href = `/projects/${projectID}/resolve/`;
                 working = false;
                 submitbutton.removeAttr("loading");
@@ -213,7 +215,7 @@ export class Project {
             // console.log(data);
 
             if (data["success"]) {
-                if (!unrandom) Sequence.increment(projectID);
+                Sequence.increment(projectID);
                 location.href = `/projects/${projectID}/resolve`;
                 await Util.sleep(500); // Throttle the requests slightly to give e621 time to apply tag changes
             } else $("#resolve-error").removeClass("display-none");
