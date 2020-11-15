@@ -53,6 +53,12 @@ section#image-data {
     text-align: center;
     padding: 0;
     font-family: monospace;
+
+    span {
+        &:after { content: " | "; }
+        &:last-child:after { content: ""; }
+    }
+    #dnp-notice a { color: #ff3636; }
 }
 
 section#title {

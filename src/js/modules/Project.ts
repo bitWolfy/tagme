@@ -106,6 +106,12 @@ export class Project {
         $("#source-history").attr("href", "https://e621.net/post_versions?search[post_id]=" + post.id);
         $("#tags-old, #tags-new").val(APIPost.getTagString(post));
 
+        // Check for DNP status
+        if (post.tags.artist.includes("avoid_posting") || post.tags.artist.includes("conditional_dnp")) {
+            $("#dnp-notice").removeAttr("style");
+        }
+
+        // Check for locked tags
         const locked = new Set<string>();
         for (const tag of post.locked_tags)
             locked.add(tag.startsWith("-") ? tag.substr(1) : ("-" + tag));
