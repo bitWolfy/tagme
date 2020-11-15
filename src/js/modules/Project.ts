@@ -106,6 +106,18 @@ export class Project {
         $("#source-history").attr("href", "https://e621.net/post_versions?search[post_id]=" + post.id);
         $("#tags-old, #tags-new").val(APIPost.getTagString(post));
 
+        const locked = new Set<string>();
+        for (const tag of post.locked_tags)
+            locked.add(tag.startsWith("-") ? tag.substr(1) : ("-" + tag));
+
+        for (const taglist of $(".taglist")) {
+            for (const tag of $(taglist).find("a").get()) {
+                const $tag = $(tag);
+                if (!locked.has($tag.text())) continue;
+                $tag.addClass("locked");
+            }
+        }
+
         for (const textarea of $("textarea").get()) {
             const $elem = $(textarea);
             $elem.height($elem[0].scrollHeight);

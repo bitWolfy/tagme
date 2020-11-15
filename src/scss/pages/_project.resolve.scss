@@ -122,6 +122,15 @@ section#actions {
             white-space: nowrap;
 
             @include scrollbars;
+
+            & > a.locked {
+                color: #ff3636;
+                &:after {
+                    content: "(locked)";
+                    color: white;
+                    padding-left: 5px;
+                }
+            }
         }
     }
 }
