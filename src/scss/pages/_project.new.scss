@@ -53,6 +53,11 @@ form#project-new {
         }
     }
 
+    div#options-gen {
+        transition: background-color 250ms linear;
+        &.highlight { background: #945f1f20; }
+    }
+
     // Options
     div.option {
         display: grid;
@@ -71,9 +76,21 @@ form#project-new {
             }
         }
 
+        div.option-move {
+            display: flex;
+            grid-column: 3/4;
+            grid-row: 1/2;
+
+            button {
+                height: 100%;
+                width: 50%;
+            }
+        }
+
         div.option-controls {
             grid-column: 3/4;
-            grid-row: 1/3;
+            grid-row: 2/3;
+            padding-bottom: 4px;
 
             button {
                 height: 100%;

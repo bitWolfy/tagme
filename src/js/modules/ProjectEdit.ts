@@ -27,6 +27,14 @@ export class ProjectEdit {
                 .appendTo(container);
 
             $("<div>")
+                .addClass("option-move")
+                .html(`
+                    <button class="options-move-up">&uarr;</button>
+                    <button class="options-move-down">&darr;</button>
+                `)
+                .appendTo(container);
+
+            $("<div>")
                 .addClass("option-controls")
                 .html(`<button class="options-remove-btn">Remove</button>`)
                 .appendTo(container);
@@ -48,6 +56,33 @@ export class ProjectEdit {
                 .appendTo(container);
 
             return false;
+        });
+
+
+        // Move option
+        optionsContainer.on("click", "button.options-move-up", (event) => {
+            event.preventDefault();
+
+            const current = $(event.currentTarget).parents(".option"),
+                prev = current.prev();
+
+            if (prev.length == 0) return;
+
+            current.insertBefore(prev);
+            optionsContainer.addClass("highlight");
+            window.setTimeout(() => { optionsContainer.removeClass("highlight"); }, 500);
+        });
+        optionsContainer.on("click", "button.options-move-down", (event) => {
+            event.preventDefault();
+
+            const current = $(event.currentTarget).parents(".option"),
+                next = current.next();
+
+            if (next.length == 0) return;
+
+            current.insertAfter(next);
+            optionsContainer.addClass("highlight");
+            window.setTimeout(() => { optionsContainer.removeClass("highlight"); }, 500);
         });
 
 

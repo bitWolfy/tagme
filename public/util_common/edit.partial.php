@@ -138,6 +138,10 @@ function printOptionHTML($title = "", $tadd = "", $trem = "") {
             <label for="option-remtags-<?php outprint($elementID); ?>">Removed Tags</label>
             <textarea id="option-remtags-<?php outprint($elementID); ?>" name="opt-trem" placeholder="Tags to remove if this option is selected"><?php outprint($trem); ?></textarea>
         </div>
+        <div class="option-move">
+            <button class="options-move-up">&uarr;</button>
+            <button class="options-move-down">&darr;</button>
+        </div>
         <div class="option-controls">
             <button class="options-remove-btn">Remove</button>
         </div>
