@@ -14,6 +14,8 @@ section#image-container {
         object-fit: contain;
         width: 100%;
         height: 100%;
+
+        &.zoom { visibility: hidden; }
     }
 
     & > video {
@@ -30,6 +32,7 @@ section#image-container {
             height: 75%;
             width: 50%;
             background: #ffffff20;
+            cursor: progress;
         }
 
         &::before {

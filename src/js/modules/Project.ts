@@ -80,10 +80,15 @@ export class Project {
                 });
             imageContainer.removeClass("loading");
         } else {
-            $("#source-image")
+            const image = $("#source-image")
                 .attr("src", post.sample.url)
                 .one("load", () => {
-                    $("#source-image").attr("src", post.file.url);
+                    rebuildZoom();
+
+                    // Replace the sampled image with the high-res one
+                    image
+                        .attr("src", post.file.url)
+                        .one("load", () => { rebuildZoom(false); });
                     imageContainer.find("img[role='presentation']").attr("src", post.file.url);
 
                     imageContainer.removeClass("loading");
@@ -91,7 +96,7 @@ export class Project {
                 .one("error", () => {
 
                     // Fallback for images that are missing a sample version
-                    $("#source-image")
+                    image
                         .attr("src", post.file.url)
                         .one("load", () => {
                             imageContainer.removeClass("loading");
@@ -99,12 +104,20 @@ export class Project {
                 });
             $("#source-video").remove();
 
-            // Initialize the zoom box
-            ($("#image-container") as any).zoom({
-                url: $("#source-image").attr("src"),
-                on: "click",
-                magnify: 1.1,
-            });
+            function rebuildZoom(sample = true): void {
+                image.removeClass("zoom");
+                const ratio = (sample ? post.sample.height : post.file.height) / image.height();
+                console.log("zoom ratio", post.file.height, image.height(), ratio, ratio > 1 ? 1 : (3 - ratio));
+                ($("#image-container") as any)
+                    .trigger('zoom.destroy')
+                    .zoom({
+                        url: image.attr("src"),
+                        on: "click",
+                        magnify: ratio > 1 ? 1 : (3 - ratio),
+                        onZoomIn: () => { image.addClass("zoom"); },
+                        onZoomOut: () => { image.removeClass("zoom"); },
+                    });
+            }
         }
 
         $("#source-link")
