@@ -17,8 +17,16 @@ export class Project {
             query = imageContainer.data("query").split(" "),
             unrandom = imageContainer.data("static");
 
-        const height = $(window).height() - $("#guidelines").offset().top + $("#source-image").height();
-        imageContainer.css("height", height);
+        $("#source-image").on("load", () => {
+
+            const top = $("#image-data").offset().top,
+                bottomEl = $("#proceed"),
+                bottom = bottomEl.offset().top + bottomEl.innerHeight(),
+                descHeight = bottom - top;
+
+            const height = $(window).height() - $("#image-container").offset().top - descHeight;
+            imageContainer.css("height", height);
+        });
 
         // Get query parameters
         let sequence = Sequence.get(projectID);
