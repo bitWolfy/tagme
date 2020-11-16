@@ -17,7 +17,7 @@ export class Project {
             query = imageContainer.data("query").split(" "),
             unrandom = imageContainer.data("static");
 
-        $("#source-image").on("load", () => {
+        $("#source-image").on("load reload", () => {
 
             const top = $("#image-data").offset().top,
                 bottomEl = $("#proceed"),

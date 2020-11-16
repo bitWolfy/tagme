@@ -1,3 +1,4 @@
+import { Page, PageDefintion } from "../components/Page";
 import { Util } from "../components/Util";
 
 export class ViewMode {
@@ -14,10 +15,13 @@ export class ViewMode {
                 else modeName = "narrow";
                 toggle
                     .html(ViewMode.getModeIcon(modeName))
-                    .attr("title", "Theme: " + modeName.toUpperCase());
+                    .attr("title", "Mode: " + modeName.toUpperCase());
 
                 Util.LS.setItem("tagme.mode", modeName);
                 ViewMode.patch(modeName);
+
+                if (Page.matches(PageDefintion.projects_resolve))
+                    $("#source-image").trigger("reload");
 
                 return false;
             });
