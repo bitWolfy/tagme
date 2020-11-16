@@ -88,8 +88,11 @@ export class Project {
                     // Replace the sampled image with the high-res one
                     image
                         .attr("src", post.file.url)
-                        .one("load", () => { rebuildZoom(false); });
-                    imageContainer.find("img[role='presentation']").attr("src", post.file.url);
+                        .one("load", () => {
+                            rebuildZoom(false);
+                            imageContainer.addClass("loaded");
+                        });
+                    // imageContainer.find("img[role='presentation']").attr("src", post.file.url);
 
                     imageContainer.removeClass("loading");
                 })
@@ -99,21 +102,37 @@ export class Project {
                     image
                         .attr("src", post.file.url)
                         .one("load", () => {
-                            imageContainer.removeClass("loading");
+                            rebuildZoom(false);
+                            imageContainer
+                                .removeClass("loading")
+                                .addClass("loaded");
                         });
+                })
+                .on("reload", () => {
+                    rebuildZoom(!imageContainer.hasClass("loaded"));
                 });
             $("#source-video").remove();
 
             function rebuildZoom(sample = true): void {
                 image.removeClass("zoom");
                 const ratio = (sample ? post.sample.height : post.file.height) / image.height();
-                console.log("zoom ratio", post.file.height, image.height(), ratio, ratio > 1 ? 1 : (3 - ratio));
+                const unratio = image.height() / (sample ? post.sample.height : post.file.height);
+
+                Debug.log(
+                    "zoom",
+                    (sample ? post.sample.height : post.file.height),
+                    image.height(),
+                    ratio,
+                    unratio,
+                    ratio > 1 ? 1.25 : (3 - ratio)
+                );
+
                 ($("#image-container") as any)
                     .trigger('zoom.destroy')
                     .zoom({
                         url: image.attr("src"),
                         on: "click",
-                        magnify: ratio > 1 ? 1 : (3 - ratio),
+                        magnify: ratio > 1 ? 1.25 : (3 - ratio),
                         onZoomIn: () => { image.addClass("zoom"); },
                         onZoomOut: () => { image.removeClass("zoom"); },
                     });
