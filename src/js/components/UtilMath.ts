@@ -12,4 +12,12 @@ export class UtilMath {
         return parseInt((new Date().getTime() + "").substr(-length));
     }
 
+    public static isNumeric(value: string): boolean {
+        return !isNaN(Number(value));
+    }
+
+    public static round(num: number, decimal = 2): number {
+        return parseFloat(num.toFixed(decimal));
+    }
+
 }

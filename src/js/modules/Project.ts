@@ -115,8 +115,8 @@ export class Project {
 
             function rebuildZoom(sample = true): void {
                 image.removeClass("zoom");
-                const ratio = (sample ? post.sample.height : post.file.height) / image.height();
-                const unratio = image.height() / (sample ? post.sample.height : post.file.height);
+                const ratio = Util.Math.round((sample ? post.sample.height : post.file.height) / image.height());
+                const unratio = Util.Math.round(image.height() / (sample ? post.sample.height : post.file.height));
 
                 Debug.log(
                     "zoom",
