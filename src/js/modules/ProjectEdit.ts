@@ -129,6 +129,7 @@ export class ProjectEdit {
             inputText = form.find("[name=text]"),
             inputTags = form.find("[name=tags]"),
             inputOptions = $("#options-gen"),
+            conTags = form.find("[name=contags]"),
             response = $("#submit-response");
 
         let working = false;
@@ -160,6 +161,7 @@ export class ProjectEdit {
                 tags: Util.getUniqueTags(inputTags),
                 optmode: form.find("[name=optmode]:checked").val() == "1" ? 1 : 0,
                 options: [],
+                contags: Util.getUniqueTags(conTags),
                 private: form.find("[name=private]:checked").val() == "1" ? 1 : 0,
             };
 

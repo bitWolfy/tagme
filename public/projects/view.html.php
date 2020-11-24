@@ -48,6 +48,7 @@ $Parsedown -> setSafeMode(true);
     data-optmode="<?php outprint($project["optmode"]); ?>"
     data-deleted="<?php echo $project["is_deleted"] ? "true" : "false"; ?>"
     data-changes="<?php outprint($project["changes"]); ?>"
+    data-contags="<?php outprint(implode(" ", $project["contags"])); ?>"
     data-private="<?php echo $project["is_private"] ? "true" : "false"; ?>"
 >
     <section-header><?php outprint($project["name"]); ?></section-header>
@@ -102,6 +103,11 @@ $Parsedown -> setSafeMode(true);
     <?php } ?>
     </table>
 </section>
+<?php if(count($project["contags"]) > 0) { ?>
+<section id="project-info-contags">
+    Extra tags: <?php outprint(implode(" ", $project["contags"])); ?>
+</section>
+<?php } ?>
 <section class="markdown">
     <?php echo $Parsedown -> text($project["text"]); ?>
 </section>

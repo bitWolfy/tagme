@@ -96,6 +96,7 @@ function getProjectList($query = []) {
                 "tags[JSON]",
                 "optmode[Int]",
                 "options[JSON]",
+                "contags[JSON]",
                 "is_deleted[Bool]",
                 "changes[Int]" => Medoo\Medoo::raw("SUM(<project_changes.changes>)"),
                 "is_private[Bool]",

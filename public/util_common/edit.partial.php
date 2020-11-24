@@ -96,6 +96,15 @@ if(isset($edit["options"])) {
     </input-group>
 
     <input-group>
+        <input-label>Conditional Tags</input-label>
+        <input type="text" name="contags" placeholder="ex. multiple_images" pattern="^[\S ]{0,10000}$" value="<?php outprint(isset($edit["contags"]) ? implode(" ", $edit["contags"]) : ""); ?>">
+    </input-group>
+    <input-group class="input-descr">
+        These tags are added if more than one option is selected.<br />
+        Add a minus (-) before the tag to remove it instead.
+    </input-group>
+
+    <input-group>
         <input-label>Project Visibility</input-label>
         <input-section>
             <input type="radio" id="private-0" name="private" value="0" <?php outprint((!isset($edit["is_private"]) || $edit["is_private"] == "0") ? "checked" : ""); ?>>

@@ -38,6 +38,7 @@ if(!is_null($projectID)) {
         "tags" => $project["tags"],
         "optmode" => $project["optmode"],
         "options" => $project["options"],
+        "contags" => $project["contags"],
         "is_private" => $project["is_private"],
     ];
 } else {

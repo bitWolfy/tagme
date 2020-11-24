@@ -14,6 +14,7 @@ export class Project {
 
         const projectID = imageContainer.data("project"),
             projectName = imageContainer.data("project-name"),
+            projectContags = (imageContainer.data("project-contags").split(" ") as string[]),
             query = imageContainer.data("query").split(" "),
             unrandom = imageContainer.data("static");
 
@@ -183,17 +184,26 @@ export class Project {
         const actions = $("#actions").on("click", "input", () => {
             const addedTags: Set<string> = new Set();
             const removedTags: Set<string> = new Set();
+            let counter = 0;
             for (const input of actions.find("input:checked")) {
                 const $parent = $(input).parent();
                 for (const tag of ($parent.attr("data-added") || "").split(" ").filter((el) => el !== ""))
                     addedTags.add(tag);
                 for (const tag of ($parent.attr("data-removed") || "").split(" ").filter((el) => el !== ""))
                     removedTags.add(tag);
+                counter++;
             }
 
             const allTags = new Set(Util.getTags($("#tags-old")));
             removedTags.forEach((tag) => { allTags.delete(tag); })
             addedTags.forEach((tag) => { allTags.add(tag); })
+
+            if (counter > 1) {
+                for (const tag of projectContags) {
+                    if (tag.startsWith("-")) allTags.delete(tag.substr(1));
+                    else allTags.add(tag);
+                }
+            }
 
             $("#tags-new").val([...allTags].join(" "));
         });

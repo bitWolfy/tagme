@@ -66,6 +66,7 @@ $Parsedown = new Parsedown();
     data-project="<?php echo $projectID; ?>"
     data-project-id="<?php echo $project["project_id"]; ?>"
     data-project-name="<?php outprint($project["name"]); ?>"
+    data-project-contags="<?php outprint(implode(" ", $project["contags"])); ?>"
     data-query="<?php outprint($query); ?>"
     data-static="<?php echo is_null($postID) ? "false" : "true"; ?>"
     class="loading"

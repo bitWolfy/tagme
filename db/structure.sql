@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `tags` longtext DEFAULT NULL CHECK (json_valid(`tags`)),
   `optmode` int(1) DEFAULT 0,
   `options` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `contags` longtext DEFAULT '[]',
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   `is_private` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`project_id`) USING BTREE,
