@@ -40,20 +40,23 @@ export class Project {
 
         // Load image data
         let imgData: APIPost[];
+        let error = false;
         if (unrandom) imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: 1 });
         else {
             query.push("randseed:" + sequence.seed);
-            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: sequence.page });
+            try { imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, page: sequence.page }); }
+            catch (err) { error = true; }
         }
 
         // Number of pages has exceeded number of posts to display
-        if ((imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && sequence.page > 1) {
+        if (!error && (imgData[0] == undefined || imgData[0]["sample"]["url"] == null) && sequence.page > 1) {
             sequence = Sequence.reset(projectID);
-            imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: sequence.seed, page: sequence.page });
+            try { imgData = await E621.Posts.get<APIPost>({ "tags": query, limit: 1, randseed: sequence.seed, page: sequence.page }); }
+            catch (err) { error = true; }
         }
 
         // Search is empty
-        if (imgData[0] == undefined || imgData[0]["sample"]["url"] == null) {
+        if (error || imgData[0] == undefined || imgData[0]["sample"]["url"] == null) {
             $("page-container").html(`
                 <section class="project-error">
                     <h2>Error - No Image Found</h2>
