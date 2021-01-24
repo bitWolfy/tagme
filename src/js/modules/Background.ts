@@ -32,7 +32,7 @@ export class Background {
             });
 
         Background.patch(seed, paletteName);
-        $(window).resize(() => {
+        $(window).on("resize", () => {
             Background.patch(seed, paletteName);
         });
     }
