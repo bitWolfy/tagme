@@ -15,6 +15,8 @@ $projectOpt = User :: rankMatches(UserRank :: JANITOR)
     : $projectOpt = [ "is_deleted" => "false", "is_private" => "false" ];
 $projects = getProjectList($projectOpt);
 
+$popular = getProjectList([ "is_deleted" => "false", "is_private" => "false", "order" => "changes", ]);
+if(count($popular["data"]) > 5) $popular["data"] = array_slice($popular["data"], 0, 5);
 
 ?>
 
@@ -43,6 +45,23 @@ $projects = getProjectList($projectOpt);
 
 
 <section class="home-group">
+    <div class="home-popular">
+        <section-header>Popular Projects</section-header>
+        <table>
+        <?php foreach($popular["data"] as $entry) { ?>
+            <?php
+                $classes = [];
+                if($entry["is_deleted"]) $classes[] = "deleted";
+                if($entry["is_private"]) $classes[] = "private";
+            ?>
+            <tr <?php if(count($classes) > 0) echo "class=\"" . implode(" ", $classes) . "\""; ?>>
+                <td class="home-projects-title"><a href="/projects/<?php outprint($entry["meta"]); ?>"><?php outprint($entry["name"]); ?></a></td>
+                <td class="home-projects-descr" title="<?php outprint(formatProjectText($entry)); ?>"><?php outprint($entry["desc"]); ?></td>
+                <td class="home-changes-count" title="<?php outprint(formatProjectText($entry)); ?>"><?php outprint($entry["changes"]); ?></td>
+            </tr>
+        <?php } ?>
+        </table>
+    </div>
     <div class="home-projects">
         <section-header>Latest Projects</section-header>
         <table>
