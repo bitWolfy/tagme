@@ -1,8 +1,8 @@
 <section id="userauth-login">
     <h1>Login</h1>
     <form id="userauth-form" action="/auth/login.json">
-        <input name="username" placeholder="Login" />
-        <input name="password" placeholder="API Key" />
+        <input name="username" type="text" placeholder="Login" />
+        <input name="password" type="password" placeholder="API Key" />
         <button type="submit" class="loading-button">Submit</button>
         <span class="userauth-remember">
             <input type="checkbox" name="remember_me" id="remember_me" checked>
