@@ -1,5 +1,6 @@
 import { Page, PageDefintion } from "./components/Page";
 import { Background } from "./modules/Background";
+import { BlacklistHandler } from "./modules/BlacklistHandler";
 import { Comment } from "./modules/Comment";
 import { Home } from "./modules/Home";
 import { Hotkeys } from "./modules/Hotkeys";
@@ -12,27 +13,34 @@ window["tagme"] = {
     "useragent": "dev.tagme/resolver/0.1",
 };
 
-Background.init();
-ViewMode.init();
+async function run(): Promise<void> {
 
-User.init();
-Hotkeys.init();
+    Background.init();
+    ViewMode.init();
 
-if (Page.matches(PageDefintion.home)) {
-    Home.build();
+    User.init();
+    await Hotkeys.init();
+
+    await BlacklistHandler.build();
+
+    if (Page.matches(PageDefintion.home)) {
+        Home.build();
+    }
+
+    if (Page.matches(PageDefintion.projects_resolve)) {
+        // console.log("project.resolve");
+        await Project.build();
+    }
+
+    if (Page.matches([PageDefintion.projects_new, PageDefintion.projects_edit])) {
+        // console.log("project.edit");
+        await ProjectEdit.build();
+    }
+
+    if (Page.matches(PageDefintion.projects_view)) {
+        // console.log("project.view");
+        await Comment.build();
+    }
 }
 
-if (Page.matches(PageDefintion.projects_resolve)) {
-    // console.log("project.resolve");
-    Project.build();
-}
-
-if (Page.matches([PageDefintion.projects_new, PageDefintion.projects_edit])) {
-    // console.log("project.edit");
-    ProjectEdit.build();
-}
-
-if (Page.matches(PageDefintion.projects_view)) {
-    // console.log("project.view");
-    Comment.build();
-}
+run();

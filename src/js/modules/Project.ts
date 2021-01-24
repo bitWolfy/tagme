@@ -1,6 +1,8 @@
 import { Debug } from "../components/Debug";
 import { E621 } from "../components/E621";
 import { Page } from "../components/Page";
+import { Blacklist } from "../components/post/Blacklist";
+import { Post } from "../components/post/Post";
 import { APIPost } from "../components/responses/APIPost";
 import { Sequence } from "../components/Sequence";
 import { Util } from "../components/Util";
@@ -68,7 +70,8 @@ export class Project {
         }
 
         // console.log(imgData);
-        const post = imgData[~~(imgData.length * Math.random())];
+        const postData = imgData[~~(imgData.length * Math.random())];
+        const post = Post.make(postData);
 
 
         // Fill in the page elements
@@ -76,22 +79,29 @@ export class Project {
 
         if (post.file.ext == "webm") {
             $("#source-image").remove();
-            $("#source-video")
+            const video = $("#source-video")
                 .removeClass("display-none")
                 .attr({
-                    "src": post.file.url,
-                    "poster": post.sample.url,
+                    "src": post.file.original,
+                    "poster": post.file.sample,
                 });
             imageContainer.removeClass("loading");
+
+            if (post.isBlacklisted()) {
+                video.one("click", () => {
+                    Blacklist.disableAll();
+                    post.updateVisibility();
+                });
+            }
         } else {
             const image = $("#source-image")
-                .attr("src", post.sample.url)
+                .attr("src", post.file.sample)
                 .one("load", () => {
                     rebuildZoom();
 
                     // Replace the sampled image with the high-res one
                     image
-                        .attr("src", post.file.url)
+                        .attr("src", post.file.original)
                         .one("load", () => {
                             rebuildZoom(false);
                             imageContainer.addClass("loaded");
@@ -104,7 +114,7 @@ export class Project {
 
                     // Fallback for images that are missing a sample version
                     image
-                        .attr("src", post.file.url)
+                        .attr("src", post.file.original)
                         .one("load", () => {
                             rebuildZoom(false);
                             imageContainer
@@ -117,14 +127,26 @@ export class Project {
                 });
             $("#source-video").remove();
 
+            if (post.isBlacklisted()) {
+                image.one("click", () => {
+                    Blacklist.disableAll();
+                    post.updateVisibility();
+                    rebuildZoom();
+                });
+            }
+
             function rebuildZoom(sample = true): void {
                 image.removeClass("zoom");
-                const ratio = Util.Math.round((sample ? post.sample.height : post.file.height) / image.height());
-                const unratio = Util.Math.round(image.height() / (sample ? post.sample.height : post.file.height));
+                imageContainer.trigger("zoom.destroy");
+
+                if (post.isBlacklisted()) return;
+
+                const ratio = Util.Math.round((sample ? post.sampleImg.height : post.img.height) / image.height());
+                const unratio = Util.Math.round(image.height() / (sample ? post.sampleImg.height : post.img.height));
 
                 Debug.log(
                     "zoom",
-                    (sample ? post.sample.height : post.file.height),
+                    (sample ? post.sampleImg.height : post.img.height),
                     image.height(),
                     ratio,
                     unratio,
@@ -132,7 +154,6 @@ export class Project {
                 );
 
                 ($("#image-container") as any)
-                    .trigger('zoom.destroy')
                     .zoom({
                         url: image.attr("src"),
                         on: "click",
@@ -146,18 +167,18 @@ export class Project {
         $("#source-link")
             .attr("href", "https://e621.net/posts/" + post.id)
             .html("#" + post.id);
-        $("#source-date").html(new Date(post.created_at).toISOString());
+        $("#source-date").html(new Date(post.date.raw).toISOString());
         $("#source-history").attr("href", "https://e621.net/post_versions?search[post_id]=" + post.id);
-        $("#tags-old, #tags-new").val(APIPost.getTagString(post));
+        $("#tags-old, #tags-new").val(post.tagString);
 
         // Check for DNP status
-        if (post.tags.artist.includes("avoid_posting") || post.tags.artist.includes("conditional_dnp")) {
+        if (post.tags.artist.has("avoid_posting") || post.tags.artist.has("conditional_dnp")) {
             $("#dnp-notice").removeAttr("style");
         }
 
         // Check for locked tags
         const locked = new Set<string>();
-        for (const tag of post.locked_tags)
+        for (const tag of post.tags.locked)
             locked.add(tag.startsWith("-") ? tag.substr(1) : ("-" + tag));
 
         for (const taglist of $(".taglist")) {
@@ -233,7 +254,7 @@ export class Project {
             submitbutton.attr("loading", "true");
 
             // Validate inputs
-            const oldTags = APIPost.getTagString(post),
+            const oldTags = post.tagString,
                 newTags = Util.getCleanInputValue($("#tags-new"));
 
             if ((newTags.length == 0) ||                    // New tags should not be empty

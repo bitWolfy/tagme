@@ -5,6 +5,8 @@ section#image-container {
 
     padding: 0;
     margin-top: 0.5rem;
+    overflow: hidden;
+    position: relative;
 
     & > img {
         max-height: 100%;
@@ -23,6 +25,20 @@ section#image-container {
         max-width: 100%;
         outline: 0 !important;
         cursor: pointer;
+    }
+
+    &[blacklisted=true] > img,
+    &[blacklisted=true] > video {
+        filter: blur(2rem);
+    }
+    &[blacklisted=true]::before {
+        content: "BLACKLISTED";
+        position: absolute;
+        z-index: 100;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+        pointer-events: none;
     }
 
     &.loading {

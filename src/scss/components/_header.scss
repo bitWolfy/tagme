@@ -89,8 +89,19 @@ header {
             border-radius: 0 0.5rem 0.5rem 0;
             font-size: 0.8rem;
             cursor: pointer;
+            position: relative;
 
             &:hover { background: $page-color; }
+            
+            &[enabled=false]::before {
+                content: "/";
+                position: absolute;
+                color: red;
+                font-weight: 800;
+                font-size: 1.25rem;
+                transform: rotate(15deg);
+            }
         }
     }
+
 }
