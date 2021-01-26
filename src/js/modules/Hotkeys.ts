@@ -12,7 +12,10 @@ export class Hotkeys {
             $elem.attr("title", keys.length == 1 ? `Hotkey: ${keys[0]}` : `Hotkeys: ${keys.join(" / ")}`);
 
             for (const key of keys)
-                Mousetrap.bind(key, () => { $elem[0].click(); });
+                Mousetrap.bind(key, () => {
+                    if ($elem.attr("data-disabled") == "true") return;
+                    $elem[0].click();
+                });
         }
     }
 

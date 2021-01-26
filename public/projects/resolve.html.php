@@ -72,7 +72,8 @@ $Parsedown = new Parsedown();
     class="loading"
 >
     <img id="source-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
-    <video id="source-video" loop="loop" controls="controls" class="display-none">
+    <video id="source-video" loop="loop" controls="controls" class="display-none"></video>
+    <div id="blacklist-container" data-hotkey="`"></div>
 </section>
 <section id="image-data">
     <span><a href="https://e621.net/posts/0" id="source-link" target="_blank" data-hotkey="p|*">#0</a></span>

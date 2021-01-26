@@ -129,7 +129,21 @@ export class Post implements PostData {
         if (state) {
             if (state == 1) this.$ref.attr("blacklisted", "true");
             else this.$ref.attr("blacklisted", "maybe");
-        } else this.$ref.removeAttr("blacklisted");
+
+            const filterList = Blacklist.getActiveFilters();
+            const container = $("#blacklist-container")
+                .attr("data-disabled", state == 1 ? "false" : "true")
+                .html("BLACKLISTED");
+            const filterEl = $("<div>").appendTo(container);
+
+            for (const filter of filterList.keys())
+                $("<span>").html(filter).appendTo(filterEl);
+
+        } else {
+            this.$ref.removeAttr("blacklisted");
+
+            $("#blacklist-container").attr("data-disabled", "true");
+        }
 
         return this;
     }

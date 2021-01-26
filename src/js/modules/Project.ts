@@ -128,7 +128,7 @@ export class Project {
             $("#source-video").remove();
 
             if (post.isBlacklisted()) {
-                image.one("click", () => {
+                imageContainer.one("click", () => {
                     Blacklist.disableAll();
                     post.updateVisibility();
                     rebuildZoom();

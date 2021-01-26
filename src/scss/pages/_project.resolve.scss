@@ -31,14 +31,24 @@ section#image-container {
     &[blacklisted=true] > video {
         filter: blur(2rem);
     }
-    &[blacklisted=true]::before {
-        content: "BLACKLISTED";
+    &:not([blacklisted=true]) #blacklist-container { display: none; }
+    & > #blacklist-container {
         position: absolute;
         z-index: 100;
         text-align: center;
         font-size: 2rem;
         font-weight: 600;
         pointer-events: none;
+
+        background: #00000080;
+        padding: 0.75rem;
+        border-radius: 8px;
+
+        & > div {
+            font-size: 1rem;
+            font-family: monospace;
+            & > span { display: block; }
+        }
     }
 
     &.loading {
