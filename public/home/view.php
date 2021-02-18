@@ -4,6 +4,7 @@ require_once ROOT . "/public/changes/_data.php";
 require_once ROOT . "/public/projects/_data.php";
 require_once ROOT . "/public/users/_data.php";
 
+use TagMe\Configuration;
 use TagMe\Auth\User;
 use TagMe\Auth\UserRank;
 
@@ -14,6 +15,7 @@ $projectOpt = User :: rankMatches(UserRank :: JANITOR)
     ? []
     : $projectOpt = [ "is_deleted" => "false", "is_private" => "false" ];
 $projects = getProjectList($projectOpt);
+$projectsMaxPage = ceil($projects["count"] / Configuration :: $page_length);
 
 $popular = getProjectList([ "is_deleted" => "false", "is_private" => "false", "order" => "changes", ]);
 if(count($popular["data"]) > 5) $popular["data"] = array_slice($popular["data"], 0, 5);
@@ -77,6 +79,20 @@ if(count($popular["data"]) > 5) $popular["data"] = array_slice($popular["data"],
             </tr>
         <?php } ?>
         </table>
+
+        <section class="pagination">
+        <?php
+        if($projectsMaxPage > 1) {
+            for($i = 1; $i <= $projectsMaxPage; $i++) {
+                if($i == 1) {
+                    echo "<span>" . $i . "</span>";
+                } else {
+                    echo "<a href=\"/projects?page=" . $i . "\">" . $i . "</a>";
+                }
+            }
+        }
+        ?>
+        </section>
     </div>
     <div class="home-changes">
         <section-header>Top Contributors</section-header>
