@@ -64,6 +64,14 @@ if(count($popular["data"]) > 5) $popular["data"] = array_slice($popular["data"],
         <?php } ?>
         </table>
     </div>
+    <div class="home-info">
+        <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+        <script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#333638', 'A0A43OM71');kofiwidget2.draw();</script> 
+
+        <?php if(strlen(Configuration :: $url_github) > 0) { ?><a href="<?php echo Configuration :: $url_github; ?>" target="_blank">Source Code</a><?php } ?>
+        <?php if(strlen(Configuration :: $url_github) > 0) { ?><a href="<?php echo Configuration :: $url_forum; ?>" target="_blank">Forum Thread</a><?php } ?>
+    </div>
+
     <div class="home-projects">
         <section-header>Latest Projects</section-header>
         <table>

@@ -19,9 +19,12 @@ class Configuration {
     public static $recaptcha_key = "";
     public static $recaptcha_secret = "";
 
-    // E621 Configuration
+    // Site Customization
     public static $commit_signature = "Tagging Sample Edit";
     public static $site_root = "sample.com";
+
+    public static $url_github = "";
+    public static $url_forum = "";
 
     // User limits
     public static $user_resolve = 100;      // changes needed for Member rank
