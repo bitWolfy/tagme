@@ -48,6 +48,7 @@ export class PostFilter {
                     filter = Util.Size.unformat(filter) + "";
                     break;
             }
+            filter = filter.toLowerCase();
 
             this.entries.push({ type: filterType, value: filter, inverted: inverse, optional: optional, comparison: comparison });
         }
@@ -77,7 +78,7 @@ export class PostFilter {
         }
 
         // Check if the post matches the filter
-        let result = true;
+        let result = false;
         let optionalHits = 0;
         for (const filter of this.entries) {
 
@@ -123,6 +124,9 @@ export class PostFilter {
                 case FilterType.Size:
                     result = PostFilterUtils.compareNumbers(post.file.size, parseInt(value), filter.comparison);
                     break;
+                case FilterType.Type:
+                    result = post.file.ext === value;
+                    break;
                 case FilterType.Duration:
                     result = post.meta.duration == null || PostFilterUtils.compareNumbers(post.meta.duration, parseFloat(value), filter.comparison);
                     break;
@@ -154,6 +158,8 @@ export class PostFilter {
                 case FilterType.MetaTags:
                     result = PostFilterUtils.compareNumbers(post.tags.meta.size, parseInt(value), filter.comparison)
                     break;
+                default:
+                    result = false;
             }
 
             // Invert the result if necessary
