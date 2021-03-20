@@ -21,7 +21,7 @@ $response["query"] = $_POST;
 
 // Preliminary validation
 if (
-    (!isset($_POST["name"]) || !preg_match("/^[\d\w_:!@#&*()_\-+ ]{3,64}$/", $_POST["name"])) ||
+    (!isset($_POST["name"]) || !preg_match("/^[\d\w_:!\?@#&*()_\-+ ]{3,64}$/", $_POST["name"])) ||
     (!isset($_POST["meta"]) || !preg_match("/^[\d\w_]{3,16}$/", $_POST["meta"]) || getProjectByID($_POST["meta"])["count"] !== 0) ||
     (!isset($_POST["desc"]) || !preg_match("/^.{3,255}$/s", $_POST["desc"])) ||
     (!isset($_POST["text"]) || !preg_match("/^.{3,10000}$/s", $_POST["text"])) ||
