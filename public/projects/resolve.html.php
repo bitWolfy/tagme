@@ -145,6 +145,30 @@ foreach( $project["options"] as $action ) {
 // Unauthorized
 ?>
 
+
+<section id="actions-unauthorized">
+
+<?php
+$actionIndex = 0;
+foreach( $project["options"] as $action ) {
+?>
+    <action data-added="<?php echo implode(" ", $action["tadd"]); ?>" data-removed="<?php echo implode(" ", $action["trem"]); ?>">
+        <input type="text" id="action-<?php echo $actionIndex; ?>">
+        <label for="action-<?php echo $actionIndex; ?>" data-hotkey="<?php echo $actionIndex == 9 ? 0 : $actionIndex + 1; ?>">
+            <?php echo $actionIndex == 9 ? 0 : $actionIndex + 1; ?>.
+            <?php echo $action["name"]; ?>
+        </label>
+        <span class="taglist">
+<?php echo formatChangedTags($action["tadd"], $action["trem"]); ?>
+        </span>
+    </action>
+<?php
+    $actionIndex++;
+}
+?>
+
+</section>
+
 <section id="proceed-unauthorized">
     <button href="/projects/<?php echo $projectID; ?>/resolve/" class="loading-button" id="page-skip" data-hotkey="tab">Skip</button>
 </section>

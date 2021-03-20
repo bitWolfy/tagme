@@ -107,7 +107,8 @@ section#actions-hint {
     margin-top: -0.25rem;
 }
 
-section#actions {
+section#actions,
+section#actions-unauthorized {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     grid-column-gap: 0.5rem;
@@ -120,7 +121,8 @@ section#actions {
         flex-flow: column;
 
         input[type=checkbox],
-        input[type=radio] { display: none; }
+        input[type=radio],
+        input[type=text] { display: none; }
 
         label {
             display: flex;
@@ -138,6 +140,11 @@ section#actions {
             font-weight: 600;
 
             &:hover { background: #b7aeae; }
+        }
+
+        input[type=text] + label {
+            background: #777;
+            cursor: unset;
         }
 
         input:checked + label {
