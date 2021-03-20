@@ -23,7 +23,7 @@ export class Project {
         $("#source-image").on("load reload", () => {
 
             const top = $("#image-data").offset().top,
-                bottomEl = $("#proceed"),
+                bottomEl = $("#proceed, #proceed-unauthorized"),
                 bottom = bottomEl.offset().top + bottomEl.innerHeight(),
                 descHeight = bottom - top;
 
