@@ -189,9 +189,10 @@ export class Project {
             }
         }
 
-        for (const textarea of $("textarea").get()) {
+        for (const textarea of $("#tags textarea").get()) {
             const $elem = $(textarea);
-            $elem.height($elem[0].scrollHeight);
+            $elem.css("height", 0); // Believe it or not, this is necessary
+            $elem.css("height", Math.ceil($elem[0].scrollHeight / 16) + "rem");
         }
 
         // Correct the page title and URL
