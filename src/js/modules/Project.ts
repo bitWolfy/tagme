@@ -189,11 +189,14 @@ export class Project {
             }
         }
 
+        let maxTextareaHeight = 0;
         for (const textarea of $("#tags textarea").get()) {
             const $elem = $(textarea);
             $elem.css("height", 0); // Believe it or not, this is necessary
-            $elem.css("height", Math.ceil($elem[0].scrollHeight / 16) + "rem");
+            const height = Math.ceil($elem[0].scrollHeight / 16);
+            if (height > maxTextareaHeight) maxTextareaHeight = height;
         }
+        $("#tags textarea").css("height", maxTextareaHeight + "rem");
 
         // Correct the page title and URL
         const title = $("title");
