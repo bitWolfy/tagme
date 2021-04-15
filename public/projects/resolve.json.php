@@ -31,9 +31,9 @@ if(!User :: rankMatches(UserRank :: MEMBER)) {
     return;
 }
 
-
 // FAILURE - Missing post data
-if( (!isset($_POST["tags"]) || is_null($_POST["tags"]) || !is_string($_POST["tags"])) ||
+if( (!isset($_POST["changes"]) || is_null($_POST["changes"]) || !is_string($_POST["changes"])) ||
+    (!isset($_POST["oldTags"]) || is_null($_POST["oldTags"]) || !is_string($_POST["oldTags"])) ||
     (!isset($_POST["postID"]) || is_null($_POST["postID"]) || !is_numeric($_POST["postID"])) ) {
     $response["error"] = "input.query";
     echo json_encode ($response, JSON_PRETTY_PRINT);
@@ -42,7 +42,8 @@ if( (!isset($_POST["tags"]) || is_null($_POST["tags"]) || !is_string($_POST["tag
 
 $projectID = PageRouter :: getVars("project_id");
 $projectData = getProjectByID($projectID);
-$tags = $_POST["tags"];
+$changes = $_POST["changes"];
+$oldTags = $_POST["oldTags"];
 $postID = $_POST["postID"];
 
 // FAILURE - Invalid Project
@@ -66,7 +67,8 @@ try {
         ],
         "auth" => [ User :: getUsername(), User :: getAPIKey() ],
         "form_params" => [
-            "post[tag_string]" => $tags,
+            "post[tag_string_diff]" => $changes,
+            "post[old_tag_string]" => $oldTags,
             "post[edit_reason]" => Configuration :: $commit_signature . " " . Configuration :: $site_root . "/p/" . $projectData["data"]["project_id"] . "/" . $projectData["data"]["meta"],
         ]
     ]);

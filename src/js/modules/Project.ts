@@ -171,6 +171,7 @@ export class Project {
         $("#source-history").attr("href", "https://e621.net/post_versions?search[post_id]=" + post.id);
         $("#tags-old, #tags-new").val(post.tagString);
 
+
         // Check for DNP status
         if (post.tags.artist.has("avoid_posting") || post.tags.artist.has("conditional_dnp")) {
             $("#dnp-notice").removeAttr("style");
@@ -210,30 +211,29 @@ export class Project {
 
         // Actions
         const actions = $("#actions").on("click", "input", () => {
-            const addedTags: Set<string> = new Set();
-            const removedTags: Set<string> = new Set();
+
             let counter = 0;
+
+            // Compile a list of changes based on the active inputs
+            const changes: Set<string> = new Set();
             for (const input of actions.find("input:checked")) {
                 const $parent = $(input).parent();
                 for (const tag of ($parent.attr("data-added") || "").split(" ").filter((el) => el !== ""))
-                    addedTags.add(tag);
+                    changes.add(tag);
                 for (const tag of ($parent.attr("data-removed") || "").split(" ").filter((el) => el !== ""))
-                    removedTags.add(tag);
+                    changes.add("-" + tag);
+
                 counter++;
             }
 
-            const allTags = new Set(Util.getTags($("#tags-old")));
-            removedTags.forEach((tag) => { allTags.delete(tag); })
-            addedTags.forEach((tag) => { allTags.add(tag); })
-
             if (counter > 1) {
                 for (const tag of projectContags) {
-                    if (tag.startsWith("-")) allTags.delete(tag.substr(1));
-                    else allTags.add(tag);
+                    if (tag.startsWith("-")) changes.delete(tag.substr(1));
+                    else changes.add(tag);
                 }
             }
 
-            $("#tags-new").val([...allTags].join(" "));
+            $("#tags-changes").val([...changes].join(" "));
         });
 
 
@@ -259,10 +259,12 @@ export class Project {
 
             // Validate inputs
             const oldTags = post.tagString,
-                newTags = Util.getCleanInputValue($("#tags-new"));
+                oldTagSet = new Set(post.tagString.split(" ")),
+                changesList = Util.getCleanInputValue($("#tags-changes")),
+                mergedChanges = TagCache.mergeChanges(oldTagSet, changesList);
 
-            if ((newTags.length == 0) ||                    // New tags should not be empty
-                (newTags.length < oldTags.length / 2)) {    // New tags should not have shrunk by more than 50%
+            if ((mergedChanges.size == 0) ||                    // New tags should not be empty
+                (mergedChanges.size < oldTagSet.size / 2)) {    // New tags should not have shrunk by more than 50%
 
                 // Summon Beetlejuice
                 const beetlejuice = await fetch("/betelgeuse/summon.json", {
@@ -275,7 +277,7 @@ export class Project {
                         project_id: imageContainer.data("project-id"),
                         post_id: imageContainer.data("id"),
                         old_tags: oldTags,
-                        new_tags: newTags,
+                        new_tags: changesList,
                     }),
                 });
 
@@ -288,8 +290,8 @@ export class Project {
                 return false;
             }
 
-            // If no changes have been made, simply skip to the next post
-            if (oldTags == newTags) {
+            // If the changes are empty, simply skip the next post
+            if (changesList.length == 0) {
                 Sequence.increment(projectID);
                 location.href = `/projects/${projectID}/resolve/`;
                 working = false;
@@ -302,7 +304,8 @@ export class Project {
                 method: "POST",
                 body: JSON.stringify({
                     postID: post.id,
-                    tags: $("#tags-new").val() + "",
+                    changes: changesList,
+                    oldTags: oldTags,
                 }),
             });
             const responseText = await response.text();
@@ -311,6 +314,7 @@ export class Project {
             // console.log(data);
 
             if (data["success"]) {
+                // tagCache.add(post.id, post.tagString);
                 Sequence.increment(projectID);
                 location.href = `/projects/${projectID}/resolve`;
                 await Util.sleep(500); // Throttle the requests slightly to give e621 time to apply tag changes
@@ -340,4 +344,74 @@ interface ProjectOptions {
     name: string;
     removedTags: string;
     addedTags: string;
+}
+
+class TagCache {
+
+    private ids: Set<number>;
+    private cache: TagCacheData;
+
+    public constructor() {
+        const data = JSON.parse(sessionStorage.getItem("tagcache") || "{}");
+
+        this.ids = new Set();
+        this.cache = {};
+
+        let index = 0;
+        for (const key of Object.keys(data).reverse()) {
+            const keyVal = parseInt(key);
+            if (!keyVal) continue;
+
+            this.ids.add(keyVal);
+            this.cache[keyVal] = data[key];
+
+            if (index >= 100) break;
+            index++;
+        }
+
+        sessionStorage.setItem("tagcache", JSON.stringify(this.cache));
+    }
+
+    public has(id: number): boolean {
+        return this.ids.has(id);
+    }
+
+    public add(id: number, tags: string): void {
+        this.cache[id] = tags;
+        this.ids.add(id);
+        sessionStorage.setItem("tagcache", JSON.stringify(this.cache));
+    }
+
+    public get(id: number): string {
+        return this.cache[id];
+    }
+
+    public static getRestorationString(oldString: string, newString: string): string {
+        const oldTags = Util.getTags(oldString),
+            newTags = Util.getTags(newString);
+
+        const removed = oldTags.filter((tag) => !newTags.includes(tag));
+        const added = newTags.filter((tag) => !oldTags.includes(tag));
+        added.forEach((part, index) => {
+            added[index] = "-" + part;
+        });
+
+        return removed.join(" ") + " " + added.join(" ");
+    }
+
+    public static mergeChanges(tags: Set<string>, changeString: string): Set<string> {
+        const changes = Util.getTags(changeString);
+
+        for (const change of changes) {
+            if (change.startsWith("-")) tags.delete(change.substr(1));
+            else tags.add(change);
+        }
+
+        return tags
+    }
+
+}
+
+interface TagCacheData {
+    [id: number]: string;
 }
