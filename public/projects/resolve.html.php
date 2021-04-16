@@ -178,8 +178,8 @@ foreach( $project["options"] as $action ) {
 
 <?php if($canResolve) { ?>
 <section id="tags">
-    <span class="tags-title">Old Tags <span id="reset-cached-tags"></span></span>
-    <span class="tags-title">Changes</span>
+    <span class="tags-title">Old Tags</span>
+    <span class="tags-title">Changes <span id="reverse-last-changes"></span></span>
     <textarea id="tags-old" readonly autocomplete="on"></textarea>
     <textarea id="tags-changes" placeholder="Tags listed here will be added to the post.&#10;Preface a tag with a minus (-) to remove it instead."></textarea>
 </section>

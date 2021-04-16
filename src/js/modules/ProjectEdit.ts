@@ -154,10 +154,10 @@ export class ProjectEdit {
             }
 
             const dataPackage = {
-                name: Util.getCleanInputValue(inputName),
-                meta: Util.getCleanInputValue(inputMeta).toLowerCase(),
-                desc: Util.getCleanInputValue(inputDesc),
-                text: Util.getCleanInputValue(inputText),
+                name: Util.getRawInputValue(inputName),
+                meta: Util.getRawInputValue(inputMeta).toLowerCase(),
+                desc: Util.getRawInputValue(inputDesc),
+                text: Util.getRawInputValue(inputText),
                 tags: Util.getUniqueTags(inputTags),
                 optmode: form.find("[name=optmode]:checked").val() == "1" ? 1 : 0,
                 options: [],

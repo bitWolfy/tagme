@@ -209,9 +209,38 @@ export class Project {
         $("a[target=_blank]").on("click", function () { this.blur(); });
 
 
+        // Option to reverse previous changes
+        const tagCache = new TagCache();
+        const cachedChanges = tagCache.get(post.id) || [];
+        let revertPreviousChanges = false;
+        if (cachedChanges.length > 0) {
+            const cachedChangesContainer = $("#reverse-last-changes");
+            $("<label>")
+                .attr({
+                    "for": "revert-changes-checkbox",
+                })
+                .html("Revert Previous Changes")
+                .appendTo(cachedChangesContainer);
+            const cachedChangesCheckbox = $("<input>")
+                .attr({
+                    type: "checkbox",
+                    id: "revert-changes-checkbox",
+                })
+                .appendTo(cachedChangesContainer)
+                .on("change", () => {
+                    revertPreviousChanges = cachedChangesCheckbox.is(":checked");
+                    console.log("reverting", revertPreviousChanges);
+                    reloadChangesList();
+                });
+        }
+
+
         // Actions
         const actions = $("#actions").on("click", "input", () => {
+            reloadChangesList();
+        });
 
+        function reloadChangesList(): void {
             let counter = 0;
 
             // Compile a list of changes based on the active inputs
@@ -233,8 +262,18 @@ export class Project {
                 }
             }
 
-            $("#tags-changes").val([...changes].join(" "));
-        });
+            const revertedChanges = [];
+            if (revertPreviousChanges)
+                for (const tag of cachedChanges) {
+                    if (!changes.has(tag))
+                        revertedChanges.push(TagCache.flipTag(tag));
+                }
+
+            $("#tags-changes").val(
+                (revertedChanges.length > 0 ? (revertedChanges.join(" ") + "\n") : "") +
+                [...changes].join(" ")
+            );
+        }
 
 
         // Skip / Submit
@@ -260,7 +299,7 @@ export class Project {
             // Validate inputs
             const oldTags = post.tagString,
                 oldTagSet = new Set(post.tagString.split(" ")),
-                changesList = Util.getCleanInputValue($("#tags-changes")),
+                changesList = Util.getInputValue($("#tags-changes")),
                 mergedChanges = TagCache.mergeChanges(oldTagSet, changesList);
 
             if ((mergedChanges.size == 0) ||                    // New tags should not be empty
@@ -316,14 +355,16 @@ export class Project {
             if (data["success"]) {
                 // tagCache.add(post.id, post.tagString);
                 Sequence.increment(projectID);
-                location.href = `/projects/${projectID}/resolve`;
+                tagCache.add(post.id, Util.getTags(changesList))
                 await Util.sleep(500); // Throttle the requests slightly to give e621 time to apply tag changes
+                location.href = `/projects/${projectID}/resolve`;
             } else $("#resolve-error").removeClass("display-none");
 
             submitbutton.removeAttr("loading");
             working = false;
             return false;
         });
+
     }
 
     private static getShuffleIcon(state: boolean): string {
@@ -352,7 +393,7 @@ class TagCache {
     private cache: TagCacheData;
 
     public constructor() {
-        const data = JSON.parse(sessionStorage.getItem("tagcache") || "{}");
+        const data = JSON.parse(sessionStorage.getItem("tagme.changes") || "{}");
 
         this.ids = new Set();
         this.cache = {};
@@ -365,24 +406,24 @@ class TagCache {
             this.ids.add(keyVal);
             this.cache[keyVal] = data[key];
 
-            if (index >= 100) break;
             index++;
+            if (index >= 3) break;
         }
 
-        sessionStorage.setItem("tagcache", JSON.stringify(this.cache));
+        sessionStorage.setItem("tagme.changes", JSON.stringify(this.cache));
     }
 
     public has(id: number): boolean {
         return this.ids.has(id);
     }
 
-    public add(id: number, tags: string): void {
+    public add(id: number, tags: string[]): void {
         this.cache[id] = tags;
         this.ids.add(id);
-        sessionStorage.setItem("tagcache", JSON.stringify(this.cache));
+        sessionStorage.setItem("tagme.changes", JSON.stringify(this.cache));
     }
 
-    public get(id: number): string {
+    public get(id: number): string[] {
         return this.cache[id];
     }
 
@@ -410,8 +451,13 @@ class TagCache {
         return tags
     }
 
+    public static flipTag(tag: string): string {
+        if (tag.startsWith("-")) return tag.substr(1);
+        else return "-" + tag;
+    }
+
 }
 
 interface TagCacheData {
-    [id: number]: string;
+    [id: number]: string[];
 }

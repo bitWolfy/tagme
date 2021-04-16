@@ -170,17 +170,16 @@ export class Util {
 
     /**
      * Parses the textare input specified in the parameter and returns a list of space-separated tags
-     * @deprecated Renamed to `Util.getInputValue()` for clarity
      * @param input Textarea to parse
      */
-    public static getTagString(input: JQuery<HTMLElement>): string {
-        return input.val().toString().trim()
+    public static getInputValue(input: JQuery<HTMLElement>): string {
+        return Util.getRawInputValue(input)
             .toLowerCase()
             .replace(/\r?\n|\r/g, " ")      // strip newlines
             .replace(/(?:\s){2,}/g, " ");   // strip multiple spaces
     }
 
-    public static getCleanInputValue(input: JQuery<HTMLElement>): string {
+    public static getRawInputValue(input: JQuery<HTMLElement>): string {
         if (input.length == 0) return "";
         return input.val().toString().trim();
     }
@@ -188,8 +187,8 @@ export class Util {
     public static getTags(input: string): string[];
     public static getTags(input: JQuery<HTMLElement>): string[];
     public static getTags(input: string | JQuery<HTMLElement>): string[] {
-        return (typeof input === "string" ? input : Util.getTagString(input))
-            .split(" ")
+        return (typeof input === "string" ? input : Util.getInputValue(input))
+            .split(/ |\n|\r/)
             .filter((el) => { return el != null && el != ""; });
     }
 

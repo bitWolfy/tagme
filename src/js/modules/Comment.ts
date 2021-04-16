@@ -92,7 +92,7 @@ export class Comment {
             const response = await fetch(`/comments/${$comment.data("id")}/edit.json`, {
                 method: "POST",
                 body: JSON.stringify({
-                    "content": Util.getCleanInputValue($input),
+                    "content": Util.getRawInputValue($input),
                 }),
             })
 
@@ -125,7 +125,7 @@ export class Comment {
                 method: "POST",
                 body: JSON.stringify({
                     "project_id": $commentAddForm.data("project"),
-                    "content": Util.getCleanInputValue($newCommentInput),
+                    "content": Util.getRawInputValue($newCommentInput),
                 }),
             })
 
