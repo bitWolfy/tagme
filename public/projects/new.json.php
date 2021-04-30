@@ -68,7 +68,7 @@ $data = [
 
 // Check for duplicates
 $db = Database :: connect();
-$lookup = $db -> select("projects", [ "project_id", "name", "meta" ], [ "meta" => $data["meta"]]);
+$lookup = $db -> select("project", [ "project_id", "name", "meta" ], [ "meta" => $data["meta"]]);
 if($lookup) {
     $response["error"] = "error.duplicate";
     echo json_encode ($response, JSON_PRETTY_PRINT);
