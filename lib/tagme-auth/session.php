@@ -75,6 +75,9 @@ class Session {
         } else $user_token = $tokenLookup[0]["token"];
         unset($tokenLookup);
     
+        $db -> delete ("user_tokens", [
+            "user_id" => $user_id,
+        ]);
         $db -> insert("user_tokens", [
             "user_id" => $user_id,
             "token" => $user_token,
