@@ -34,7 +34,7 @@ if(count($popular["data"]) > 5) $popular["data"] = array_slice($popular["data"],
         <span>by <span id="counter-users" class="counter" count="<?php echo $users["count"]; ?>">0</span> Users</span>
     </div>
     <div class="home-counters-projects">
-        <span>via <span id="counter-projects" class="counter" count="<?php echo $projects["count"]; ?>">">0</span> Projects</span>
+        <span>via <span id="counter-projects" class="counter" count="<?php echo $projects["count"]; ?>">0</span> Projects</span>
     </div>
 </section>
 
