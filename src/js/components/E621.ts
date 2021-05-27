@@ -350,7 +350,7 @@ export class E621 {
             const item = this.queue.shift();
             Debug.connectLog(item.request.url);
 
-            await new Promise(async (resolve) => {
+            await new Promise<void>(async (resolve) => {
                 fetch(item.request).then(
                     async (response) => {
                         if (response.ok) {
@@ -383,8 +383,8 @@ export class E621 {
                         this.emitter.trigger(
                             "api.re621.result-" + item.index,
                             [
-                                { error: error[1] + " " + error[0].error },
-                                error[1],
+                                { error: Array.isArray(error) ? (error[1] + " " + error[0].error) : error },
+                                Array.isArray(error) ? error[1] : error,
                                 item.endpoint,
                                 item.node,
                             ]

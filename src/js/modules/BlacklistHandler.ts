@@ -50,11 +50,13 @@ export class BlacklistHandler {
             });
 
         async function reloadBlacklist(): Promise<void> {
-            if (blacklistState) {
-                const userData = await E621.User.id(userID).first<APICurrentUser>();
-                if (userData !== null)
-                    blacklistData = userData.blacklisted_tags.split("\n").filter(n => n) || [];
-            } else blacklistData = [];
+            try {
+                if (blacklistState) {
+                    const userData = await E621.User.id(userID).first<APICurrentUser>();
+                    if (userData !== null)
+                        blacklistData = userData.blacklisted_tags.split("\n").filter(n => n) || [];
+                } else blacklistData = [];
+            } catch (e) { blacklistData = []; }
 
             blacklistTime = Util.Time.now();
 
