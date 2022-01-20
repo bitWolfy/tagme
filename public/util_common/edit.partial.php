@@ -25,7 +25,7 @@
     </input-group>
     <input-group class="input-descr">
         Short name, used primarily in the page URL. Should (roughly) match the project title.<br />
-        Can only contain letters, numbers, and underscores.
+        Can only contain letters, numbers, and underscores, and must be between 3 and 16 characters long.
     </input-group>
 
     <input-group>
